@@ -25,11 +25,11 @@ end
 gem 'pg', '~>0.19', '>=0.19.0'
 gem 'mongoid', '~>5.1', '>=5.1.5'
 
-group :assets do
-  gem 'therubyracer'
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+# group :assets do
+#   gem 'therubyracer'
+#   gem 'sass-rails'
+#   gem 'coffee-rails'
+#   gem 'uglifier'
+# end
 
 
