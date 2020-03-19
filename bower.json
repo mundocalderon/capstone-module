@@ -1,0 +1,24 @@
+{
+  "name": "capstone-module-one",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "mundocalderon-imac <mundocalderon@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/mundocalderon/capstone-module-one",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery2": "^2.0.0",
+    "bootstrap-sass": "^3.4.1",
+    "angular": "^1.7.9",
+    "angular-ui-router": "^1.0.25",
+    "angular-resource": "^1.7.9"
+  }
+}
