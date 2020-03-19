@@ -12,3 +12,10 @@
 !/log/.keep
 /tmp
 *.DS_Store
+
+/client/build
+/bower_components
+/node_modules
+
+
+
