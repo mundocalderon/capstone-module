@@ -17,6 +17,7 @@
         ////////////////
         function activate() {
         	newCity();
+            vm.cities = City.query();
         }
 
         function newCity() {
