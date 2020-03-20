@@ -10,3 +10,4 @@
 //= require capstone/app.router
 
 //= require capstone/cities/cities.module
+//= require capstone/cities/cities.service
