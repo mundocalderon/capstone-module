@@ -5,6 +5,7 @@
         .module('capstone')
         .constant("capstone.APP_CONFIG", {
         	server_url: "<%= ENV['RAILS_API_URL'] %>",
+        	cities_html: "<%= asset_path('capstone/cities/cities.html') %>",
         	main_page_html: "<%= asset_path('capstone/pages/main.html') %>"
         });
 })();

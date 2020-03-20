@@ -11,3 +11,5 @@
 
 //= require capstone/cities/cities.module
 //= require capstone/cities/cities.service
+//= require capstone/cities/cities.controller
+//= require capstone/cities/cities.directive

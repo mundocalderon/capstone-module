@@ -7,8 +7,8 @@
 
     CityFactory.$inject = ['$resource', 'capstone.APP_CONFIG'];
 
-    /* @ngInject */
-    function serviceFactory($resource, APP_CONFIG) {
+    
+    function CityFactory($resource, APP_CONFIG) {
     	return $resource(APP_CONFIG.server_url + "/api/cities/:id",
     		{ id: '@id'},
     		{ update: { method: "PUT" }
