@@ -8,3 +8,5 @@
 //= require capstone/app.module
 //= require capstone/app.constant
 //= require capstone/app.router
+
+//= require capstone/cities/cities.module
