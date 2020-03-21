@@ -32,8 +32,8 @@
         	console.log(response);
         }
 
-        function edit(object, index){
-
+        function edit(object){
+            vm.city=object;
         }
 
         function create(){
@@ -46,20 +46,31 @@
             .catch(handleError);
         }
 
-        function read(){
-
-        }
-
         function update(){
+            vm.city.$update()
+            .then(function(response){
 
+            })
+            .catch(handleError);
         }
 
         function destroy(){
-
+            vm.city.$delete()
+            .then(function(resposne){
+                removeElement(vm.cities, vm.city);
+                //vm.cities = City.query();
+                newCity();
+            })
+            .catch(handleError);
         }
 
-        function removeElements(elements, element){
-
+        function removeElement(elements, element){
+            for( var i=0; i<element.length; i++){
+                if(elements[i].id == element.id){
+                    elements.splice(i,1);
+                    break;
+                }
+            }
         }
 
     }

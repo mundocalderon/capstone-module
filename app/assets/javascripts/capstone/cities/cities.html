@@ -6,6 +6,11 @@
 		<label>Name:</label>
 		<input type="text" class="form-control" name="name" ng-model="citiesVM.city.name" required />
 		<button class="btn btn-default" type="submit" ng-if="!citiesVM.city.id" ng-click="citiesVM.create()">Create City</button>
+
+		<span ng-if="citiesVM.city.id">
+			<button class="btn btn-default" type="submit" ng-click="citiesVM.update()">Update City</button>
+			<button class="btn btn-danger" ng-click="citiesVM.destroy()">Remove City</button>
+		</span>
 	</form>
 
 	<ul>
