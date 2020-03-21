@@ -51,6 +51,7 @@
             vm.city.$update()
             .then(function(response){
                 console.log("UPDATE!", response);
+                newCity();
             })
             .catch(handleError);
         }
@@ -67,9 +68,12 @@
         }
 
         function removeElement(elements, element){
-            for( var i=0; i<element.length; i++){
+            console.log("removing element");
+            for( var i=0; i<elements.length; i++){
                 if(elements[i].id == element.id){
+                    console.log("found and removing", elements[i])
                     elements.splice(i,1);
+
                     break;
                 }
             }
