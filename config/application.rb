@@ -37,14 +37,14 @@ module CapstoneModuleOne
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.middleware.insert_before 0, "Rack::Cors" do
-        allow do
-            origins /https:\/\/\w+\.github\.io\/.*/
+    # config.middleware.insert_before 0, "Rack::Cors" do
+    #     allow do
+    #         origins /https:\/\/\w+\.github\.io\/.*/
 
-            resource '/api/*',
-            :headers => :any,
-            :methods => [:get, :post, :put, :delete, :options]
-        end
-    end
+    #         resource '/api/*',
+    #         :headers => :any,
+    #         :methods => [:get, :post, :put, :delete, :options]
+    #     end
+    # end
   end
 end
