@@ -34,12 +34,13 @@
 
         function edit(object){
             vm.city=object;
+            console.log("current city changed!");
         }
 
         function create(){
             vm.city.$save()
             .then(function(response){
-                console.log(response);
+                console.log("CREATED", response);
                 vm.cities.push(vm.city);
                 newCity();
             })
@@ -49,14 +50,15 @@
         function update(){
             vm.city.$update()
             .then(function(response){
-
+                console.log("UPDATE!", response);
             })
             .catch(handleError);
         }
 
         function destroy(){
             vm.city.$delete()
-            .then(function(resposne){
+            .then(function(response){
+                console.log("DESTROYED!", response)
                 removeElement(vm.cities, vm.city);
                 //vm.cities = City.query();
                 newCity();
