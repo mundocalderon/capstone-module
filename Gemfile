@@ -31,10 +31,6 @@ end
 gem 'pg', '~>0.19', '>=0.19.0'
 gem 'mongoid', '~>5.1', '>=5.1.5'
 
-group :assets do
-  gem 'therubyracer'
-end
-
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '~>3.3', '>= 3.3.7'
   gem 'rails-assets-angular', '~>1.5', '>= 1.5.8'
