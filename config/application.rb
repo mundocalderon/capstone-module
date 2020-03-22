@@ -46,5 +46,20 @@ module CapstoneModuleOne
             :methods => [:get, :post, :put, :delete, :options]
         end
     end
+
+    #turning off specs that are generated with rails g scaffold by default.
+    config.generators do |g|
+        g.test_framework :rspec,
+        :model_specs => true,
+        :routing_specs => false,
+        :controller_specs => false,
+        :helper_specs => false,
+        :view_specs => false,
+        :request_specs => true,
+        :policy_specs => false,
+        :feature_specs => true
+    end
+
+
   end
 end
