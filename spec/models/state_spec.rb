@@ -10,12 +10,15 @@ describe State, type: :model, orm: :mongoid do
 	end
 
 	context "created State (let)" do
-		let(:state) {State.create(:name => "test") }
+		# let(:state) {State.create(:name => "test") }
+		before(:each) do
+			@state = FactoryGirl.create(:state_team)
+		end
 		include_context "db_scope"
 
-		it { expect(state).to be_persisted }
-		it { expect(state.name).to eq("test") }
-		it { expect(State.find(state.id)).to_not be_nil }
+		it { expect(@state).to be_persisted }
+		it { expect(@state.name).to eq(@state.name) }
+		it { expect(State.find(@state.id)).to_not be_nil }
 	end
 end
 
