@@ -1,6 +1,6 @@
 # rails g factory_girl:model State
 FactoryGirl.define do
-  factory :state, class: 'State' do
+  factory :state, :parent => :state_team do
     
   end
 

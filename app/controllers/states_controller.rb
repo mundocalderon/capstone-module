@@ -1,5 +1,7 @@
 class StatesController < ApplicationController
   before_action :set_state, only: [:show, :update, :destroy]
+  wrap_parameters :state, include: ["name"]
+
 
   # GET /states
   # GET /states.json

@@ -1,5 +1,6 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :update, :destroy]
+  wrap_parameters :city, include: ["name"]
 
   # GET /cities
   # GET /cities.json
