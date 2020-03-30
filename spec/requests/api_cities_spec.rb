@@ -29,7 +29,7 @@ describe "Cities API", type: :request do
       expect(response).to have_http_status(:ok)
 
       payload=parsed_body
-      pp payload
+      #pp payload
       expect(payload).to have_key("id")
       expect(payload).to have_key("name")
       expect(payload["id"]).to eq(city.id)
@@ -42,7 +42,7 @@ describe "Cities API", type: :request do
       expect(response.content_type).to eq("application/json")
 
       payload=parsed_body
-      pp payload
+      #pp payload
       expect(payload).to have_key("errors")
       expect(payload["errors"]).to have_key("full_messages")
       expect(payload["errors"]["full_messages"][0]).to include("cannot find","#{bad_city}")
@@ -54,12 +54,12 @@ describe "Cities API", type: :request do
 
     it "can create with provided name" do
       jpost cities_path, city_attributes
-      pp response 
+      #pp response 
       expect(response).to have_http_status(:created)
       expect(response.content_type).to eq(:json)
 
       #check the payload of the response
-      pp parsed_body 
+      #pp parsed_body 
       payload=parsed_body
       expect(payload).to have_key("id")
       expect(payload).to have_key("name")

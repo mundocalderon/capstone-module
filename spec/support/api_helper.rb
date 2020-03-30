@@ -13,14 +13,54 @@ module ApiHelper
   #   put(path, params.to_json, headers)
   # end
 
-  ["post", "put"].each do |http_method_name|
+  ["post", "put", "patch", "get", "head", "delete"].each do |http_method_name|
     define_method("j#{http_method_name}") do |path,params={},headers={}|
-      headers=headers.merge('content-type'=>'application/json') if !params.empty?
-      self.send(http_method_name, path, params.to_json, headers)
+      if ["post", "put", "patch"].include? http_method_name
+        headers=headers.merge('content-type'=>'application/json') if !params.empty?
+        params = params.to_json
+      end
+      self.send(http_method_name, 
+                path, 
+                params, 
+                headers.merge(access_tokens))
     end
   end
-end
 
+  def signup registration, status=:ok
+    jpost user_registration_path, registration
+    expect(response).to have_http_status(status)  
+    payload=parsed_body
+    if response.ok?
+      registration.merge(:id=>payload["data"]["id"], :uid=>payload["data"]["uid"])
+    else
+      payload
+    end
+  end
+
+  def login credentials, status=:ok
+    jpost user_session_path, credentials.slice(:email, :password)
+    expect(response).to have_http_status(status)
+    return response.ok? ? parsed_body["data"] : parsed_body
+  end
+
+  def logout status=:ok
+    jdelete destroy_user_session_path
+    @last_tokens = {}
+    expect(response).to have_http_status(status) if status
+  end
+
+  def access_tokens?
+    !response.headers["access-token"].nil? if response
+  end
+
+  def access_tokens
+    if access_tokens?
+      # @last_tokens=["uid","client","token-type","access-token"].inject({}) {|h,k| h[k]=response.headers[k] ; h }
+      @last_tokens=response.headers.slice("uid","client","token-type","access-token")  
+    end
+    @last_tokens || {}
+  end
+end
 
 RSpec.shared_examples "resource index" do |model|
   let!(:resources) { (1..5).map {|idx| FactoryGirl.create(model) } }
