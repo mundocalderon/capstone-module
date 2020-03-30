@@ -41,8 +41,9 @@ module CapstoneModuleOne
         allow do
             origins /https:\/\/\w+\.github\.io\/.*/
 
-            resource '/api/*',
+            resource '*',
             :headers => :any,
+            :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
             :methods => [:get, :post, :put, :delete, :options]
         end
     end
