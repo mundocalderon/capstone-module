@@ -19,7 +19,7 @@ module ApiHelper
         headers=headers.merge('content-type'=>'application/json') if !params.empty?
         params = params.to_json
       end
-      self.send(http_method_name, 
+      request= self.send(http_method_name, 
                 path, 
                 params, 
                 headers.merge(access_tokens))
@@ -67,7 +67,7 @@ RSpec.shared_examples "resource index" do |model|
   let(:payload) { parsed_body }
 
   it "returns all #{model} instances" do
-    get send("#{model}s_path"), {}, {"Accept"=>"application/json"}
+    jget send("#{model}s_path"), {}, {"Accept"=>"application/json"}
     expect(response).to have_http_status(:ok)
     expect(response.content_type).to eq("application/json")
 
@@ -83,7 +83,7 @@ RSpec.shared_examples "resource show" do |model|
   let(:payload) { parsed_body }
 
   it "returns #{model} when using a correct ID" do
-    get send("#{model}_path", resource.id)
+    jget send("#{model}_path", resource.id)
     expect(response).to have_http_status(:ok)
     expect(response.content_type).to eq("application/json")
 
@@ -91,7 +91,7 @@ RSpec.shared_examples "resource show" do |model|
   end
 
   it "returns not found when using a bad ID" do
-    get send("#{model}_path", bad_id)
+    jget send("#{model}_path", bad_id)
     expect(response).to have_http_status(:not_found)
     expect(response.content_type).to eq("application/json")
 
@@ -103,7 +103,7 @@ RSpec.shared_examples "resource show" do |model|
 end
 
 
-RSpec.shared_examples "create a new resource" do |model|
+RSpec.shared_examples "resource create" do |model|
   let(:resource_attributes) { FactoryGirl.attributes_for(model) }
   let(:payload) { parsed_body }
 
@@ -117,12 +117,12 @@ RSpec.shared_examples "create a new resource" do |model|
     response_check if respond_to?(:response_check)
    
     #verify we can locate the created instance in DB
-    get send("#{model}_path", payload["id"])
+    jget send("#{model}_path", payload["id"])
     expect(response).to have_http_status(:ok)
   end
 end
 
-RSpec.shared_examples "modifiable resource" do |model|
+RSpec.shared_examples "resource modify" do |model|
   let(:resource) { FactoryGirl.create(model) }
   let(:new_attribute) { FactoryGirl.attributes_for(model) }
 
@@ -136,14 +136,14 @@ RSpec.shared_examples "modifiable resource" do |model|
 
   it "can be deleted" do
     #head request is the same as GET, except that it only responds with headers
-    head send("#{model}_path", resource.id)
+    jhead send("#{model}_path", resource.id)
     expect(response).to have_http_status(:ok)
 
     #issue delete
-    delete send("#{model}_path", resource.id)
+    jdelete send("#{model}_path", resource.id)
     expect(response).to have_http_status(:no_content)
 
-    head send("#{model}_path", resource.id)
+    jhead send("#{model}_path", resource.id)
     expect(response).to have_http_status(:not_found)
   end
 end
