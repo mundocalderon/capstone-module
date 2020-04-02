@@ -22,7 +22,7 @@ FactoryGirl.define do
   factory :city, :parent => :city_faker_names do
   end
 
-	# FactoryGirl.attributes_for(:city_transient2, :male=>false)
+	# FactoryGirl.attributes_for(:city_transient, :male=>false)
 	# => {}
 	#FactoryGirl.build(:city_transient, :male=>false).attributes
 	# => {"id"=>nil, "name"=>"Ms Test", "created_at"=>nil, "updated_at"=>nil}

@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Image, type: :model do
   include_context "db_cleanup"
 
-
   context "build valid image" do
     it "default image created with random caption" do
       image = FactoryGirl.build(:image)
