@@ -5,7 +5,7 @@
         .module('capstone.cities')
         .directive('capCities', CitiesDirective);
 
-    CitiesDirective.$inject = ['capstone.APP_CONFIG'];
+    CitiesDirective.$inject = ['capstone.config.APP_CONFIG'];
 
     function CitiesDirective(APP_CONFIG) {
         // Usage:

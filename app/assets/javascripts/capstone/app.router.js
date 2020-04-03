@@ -5,9 +5,10 @@
     .module("capstone")
     .config(RouterFunction);
 
+
   RouterFunction.$inject = ["$stateProvider",
                             "$urlRouterProvider", 
-                            "capstone.APP_CONFIG"];
+                            "capstone.config.APP_CONFIG"];
 
   function RouterFunction($stateProvider, $urlRouterProvider, APP_CONFIG) {
     $stateProvider
@@ -17,6 +18,10 @@
       // controller: ,
       // controllerAs: ,
     })
+    .state("accountSignup",{
+      url: "/signup",
+      templateUrl: APP_CONFIG.signup_page_html
+    }); 
 
     $urlRouterProvider.otherwise("/");
   }

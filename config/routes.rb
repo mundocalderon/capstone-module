@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'auth/whoami'
-  get 'auth/checkme'
+  get 'authn/whoami'
+  get 'authn/checkme'
 
   mount_devise_token_auth_for 'User', at: 'auth'
   scope :api, defaults: {format: :json} do

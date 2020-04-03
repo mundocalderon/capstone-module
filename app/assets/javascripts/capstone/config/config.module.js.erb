@@ -1,0 +1,16 @@
+(function() {
+    'use strict';
+
+    angular
+        .module("capstone.config", [])
+        .constant("capstone.config.APP_CONFIG", {
+          server_url: "<%= ENV['RAILS_API_URL'] %>",
+          
+          main_page_html: "<%= asset_path('capstone/pages/main.html') %>",
+          signup_page_html: "<%= asset_path('capstone/pages/signup_page.html') %>",
+
+          cities_html: "<%= asset_path('capstone/cities/cities.html') %>",
+          authn_signup_html: "<%= asset_path('capstone/authn/signup/signup.html') %>"
+        });
+
+})();

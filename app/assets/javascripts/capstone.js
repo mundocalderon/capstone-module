@@ -4,10 +4,21 @@
 //= require angular
 //= require angular-ui-router
 //= require angular-resource
+//= require angular-cookie
+//= require ng-token-auth
 
 //= require capstone/app.module
-//= require capstone/app.constant
 //= require capstone/app.router
+
+//= require capstone/config/config.module
+
+
+//= require capstone/authn/authn.module
+//= require capstone/authn/authn.config
+//= require capstone/authn/authn.service
+//= require capstone/authn/signup/signup.component
+
+
 
 //= require capstone/cities/cities.module
 //= require capstone/cities/cities.service

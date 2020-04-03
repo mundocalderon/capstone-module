@@ -1,4 +1,4 @@
-class AuthController < ApplicationController
+class AuthnController < ApplicationController
   before_action :authenticate_user!, only: [:checkme]
   def whoami
     render json: current_user || {}

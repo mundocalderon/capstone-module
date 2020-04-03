@@ -5,7 +5,7 @@
         .module('capstone.cities')
         .factory('capstone.cities.City', CityFactory);
 
-    CityFactory.$inject = ['$resource', 'capstone.APP_CONFIG'];
+    CityFactory.$inject = ['$resource', 'capstone.config.APP_CONFIG'];
 
     
     function CityFactory($resource, APP_CONFIG) {
