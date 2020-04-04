@@ -72,7 +72,7 @@ RSpec.describe "Things", type: :request do
       expect(response.status).to be >= 400
       expect(response.status).to be <= 500
       expect(parsed_body).to include("errors")
-      expect(parsed_body["errors"]).to include(/You need to sign in or sign up before continuing./)
+      expect(parsed_body["errors"]).to include(/Authorized users only./)
     end
   end
 

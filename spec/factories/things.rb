@@ -5,7 +5,7 @@ FactoryGirl.define do
     notes { Faker::Lorem.sentence }
 
     trait(:with_description) do
-      description { Faker::BossaNova.song }
+      description { Faker::Lorem.sentence }
     end
 
     trait :with_image do

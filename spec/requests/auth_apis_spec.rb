@@ -51,7 +51,7 @@ RSpec.describe "Authentication API", type: :request do
           expect(payload).to include("errors")
           expect(payload["errors"]).to include("email")
           expect(payload["errors"]).to include("full_messages")
-          expect(payload["errors"]["full_messages"]).to include(/Email.+taken/)
+          expect(payload["errors"]["full_messages"]).to include(/Email already in use/)
         end
       end
     end
@@ -68,7 +68,7 @@ RSpec.describe "Authentication API", type: :request do
       get authn_checkme_path
       expect(response).to have_http_status(:unauthorized)
       expect(parsed_body).to include("errors")
-      expect(parsed_body["errors"]).to include("You need to sign in or sign up before continuing.")
+      expect(parsed_body["errors"]).to include("Authorized users only.")
     end
   end
 

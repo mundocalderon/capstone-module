@@ -9,7 +9,7 @@ RSpec.feature "Authns", type: :feature, :js=>true do
       scenario "creates account and navigates away from signup page" do
         start_time=Time.now
         signup user_props
-       
+        #binding.pry
         #check we re-directed to home page
         expect(page).to have_no_css("#signup-form")
         #check the DB for the existance of the User account
