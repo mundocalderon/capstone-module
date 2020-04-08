@@ -3,4 +3,5 @@
  *
  *= require bootstrap
  *= require capstone/layout
+ *= require capstone/authn
  */

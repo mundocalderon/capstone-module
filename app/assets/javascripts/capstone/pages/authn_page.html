@@ -1,0 +1,18 @@
+<div id="authn-check" cap-authn-check>
+  <h1>Authentication Check</h1>
+
+<div class="client-user">
+  <button ng-click="idVM.getClientUser()">$auth says...</button>
+  <label>{{idVM.client}}</label>
+
+  <div class="whoami-user">  
+    <button ng-click="idVM.whoAmI()">whoAmI() says...</button>
+    <label>{{idVM.server.whoAmI}}</label>
+  </div>
+  
+  <div class="checkme-user">
+    <button ng-click="idVM.checkMe()">checkme() says...</button>
+    <label>{{idVM.server.checkMe}}</label>
+  </div>
+
+</div>

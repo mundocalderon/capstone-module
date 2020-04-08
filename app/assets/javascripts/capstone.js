@@ -16,8 +16,14 @@
 //= require capstone/authn/authn.module
 //= require capstone/authn/authn.config
 //= require capstone/authn/authn.service
+//= require capstone/authn/checkme.service
+//= require capstone/authn/whoami.service
 //= require capstone/authn/signup/signup.component
+//= require capstone/authn/authn_session/authn_session.component
+//= require capstone/authn/authn_check/authn_check.directive
 
+//= require capstone/layout/layout.module 
+//= require capstone/layout/navbar/navbar.component 
 
 
 //= require capstone/cities/cities.module

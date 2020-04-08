@@ -42,7 +42,9 @@ RSpec.feature "ManageCities", type: :feature, :js => true do
     background(:each) do
       visit root_path
       expect(page).to have_css("h3", text:"Cities")
-      expect(page).to have_css("li", count:0)
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_css("li", count:0)
+      end
     end
 
     it "has input form" do
@@ -71,7 +73,7 @@ RSpec.feature "ManageCities", type: :feature, :js => true do
       find(:xpath, "//button[@ng-click='citiesVM.create()']").click
       within(:xpath, CITY_LIST_XPATH) do
         using_wait_time 5 do
-          expect(page).to have_xpath("//li", count:1)
+          expect(page).to have_xpath(".//li", count:1)
           expect(page).to have_content(city_attributes[:name])
         end
       end
@@ -94,16 +96,19 @@ RSpec.feature "ManageCities", type: :feature, :js => true do
     it "can be updated" do
       existing_name = city_attributes[:name]
       new_name = FactoryGirl.attributes_for(:city)[:name]
-
-      expect(page).to have_css("li", count:1)
-      expect(page).to have_css("li", text:existing_name)
-      expect(page).to have_no_css("li", text:new_name)
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_css("li", count:1)
+        expect(page).to have_css("li", text:existing_name)
+        expect(page).to have_no_css("li", text:new_name)
+      end
 
       update_city(existing_name, new_name)
 
-      expect(page).to have_css("li", count:1)
-      expect(page).to have_no_css("li", text:existing_name)
-      expect(page).to have_css("li", text:new_name)
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_css("li", count:1)
+        expect(page).to have_no_css("li", text:existing_name)
+        expect(page).to have_css("li", text:new_name)
+      end
     end
 
     it "can be deleted" do

@@ -6,6 +6,7 @@
             'ui.router',
             'capstone.config',
             'capstone.authn',
+            'capstone.layout',
             'capstone.cities'
         ]);
 })();
