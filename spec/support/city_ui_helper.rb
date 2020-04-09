@@ -3,7 +3,7 @@ module CityUiHelper
   CITY_LIST_XPATH="//h3[text()='Cities']/../ul"
 
   def create_city city_attributes
-    visit root_path unless page.has_css?("h3", text:"Cities")
+    visit "#{root_path}/#/" unless page.has_css?("h3", text:"Cities")
     expect(page).to have_css("h3", text:"Cities")
     within(:xpath,CITY_FORM_XPATH) do
       fill_in("name", :with=>city_attributes[:name])
@@ -15,7 +15,7 @@ module CityUiHelper
   end
 
   def update_city existing_name, new_name
-    visit root_path unless page.has_css?("h3", text:"Cities")
+    visit "#{root_path}/#/" unless page.has_css?("h3", text:"Cities")
     expect(page).to have_css("h3", text:"Cities")
     within(:xpath,CITY_LIST_XPATH) do
       find("a",text:existing_name).click
@@ -30,7 +30,7 @@ module CityUiHelper
   end
 
   def delete_city name
-    visit root_path unless page.has_css?("h3", text:"Cities")
+    visit "#{root_path}/#/" unless page.has_css?("h3", text:"Cities")
     expect(page).to have_css("h3", text:"Cities")
     within(:xpath, CITY_LIST_XPATH) do
       find("li a", text:name).click
