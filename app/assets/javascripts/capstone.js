@@ -30,3 +30,8 @@
 //= require capstone/cities/cities.service
 //= require capstone/cities/cities.controller
 //= require capstone/cities/cities.directive
+
+//= require capstone/subjects/subjects.module
+//= require capstone/subjects/images/images.service
+//= require capstone/subjects/images/images.component
+//= require capstone/subjects/images/images_authz.directive

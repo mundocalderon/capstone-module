@@ -34,7 +34,7 @@
         }
 
         function isAuthenticated() {
-          return service.user && service.user["uid"];      
+          return service.user!=null && service.user["uid"]!=null;      
         }
         function getCurrentUserName() {
           return service.user ? service.user.name : null;

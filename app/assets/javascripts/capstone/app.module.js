@@ -7,6 +7,7 @@
             'capstone.config',
             'capstone.authn',
             'capstone.layout',
-            'capstone.cities'
+            'capstone.cities',
+            'capstone.subjects'
         ]);
 })();
