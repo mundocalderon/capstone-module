@@ -23,7 +23,7 @@ module UiHelper
     fillin_signup registration
     click_on("Sign Up")  
     if success
-      expect(page).to have_no_button("Sign Up", :wait=>2)
+      expect(page).to have_no_button("Sign Up", :wait=>5)
     else
       expect(page).to have_button("Sign Up")
     end
@@ -59,8 +59,8 @@ module UiHelper
   def logout
     if logged_in?
       find("#navbar-loginlabel").click unless page.has_button?("Logout")
-      find_button("Logout", :wait=> 2).click
-      expect(page).to have_no_css("#user_id",:visible=>false, :wait=>2)
+      find_button("Logout", :wait=> 5).click
+      expect(page).to have_no_css("#user_id",:visible=>false, :wait=>5)
     end
   end
 end

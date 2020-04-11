@@ -12,6 +12,7 @@
 !/log/.keep
 /tmp
 *.DS_Store
+*.byebug_history
 
 /client/build
 /bower_components
