@@ -30,12 +30,6 @@
   function ThingsAuthzController($scope, Authn) {
     var vm = this;
     vm.authz={};
-    vm.authz.authenticated = false;
-    vm.authz.canCreate     = false,
-    vm.authz.canQuery      = false,
-    vm.authz.canUpdate     = false,
-    vm.authz.canDelete     = false,
-    vm.authz.canGetDetails = false;
     vm.authz.canUpdateItem = canUpdateItem;
 
     ThingsAuthzController.prototype.resetAccess = function() {
@@ -44,6 +38,8 @@
       this.authz.canUpdate     = false;
       this.authz.canDelete     = false;
       this.authz.canGetDetails = false;
+      this.authz.canUpdateImage = false;
+      this.authz.canRemoveImage = false;
     }
 
     activate();
@@ -63,9 +59,12 @@
         vm.authz.canUpdate     = true,
         vm.authz.canDelete     = true,
         vm.authz.canGetDetails = true;
+        vm.authz.canUpdateImage = true;
+        vm.authz.canRemoveImage = true;
       } else {
         vm.resetAccess();
       }
+      console.log(vm.authz)
     }
 
     function canUpdateItem(item) {

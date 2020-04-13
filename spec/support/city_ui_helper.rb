@@ -7,7 +7,8 @@ module CityUiHelper
     expect(page).to have_css("h3", text:"Cities")
     within(:xpath,CITY_FORM_XPATH) do
       fill_in("name", :with=>city_attributes[:name])
-      click_button("Create City")
+      expect(page).to have_field("name", :with=>city_attributes[:name])
+      click_button("Create City", :disabled=>false)
     end
     within(:xpath,CITY_LIST_XPATH) do
       expect(page).to have_css("li a", text: city_attributes[:name], wait: 5)
@@ -21,6 +22,7 @@ module CityUiHelper
       find("a",text:existing_name).click
     end
     within(:xpath,CITY_FORM_XPATH) do
+      find_field("name", :readonly=>false, :wait=>5)
       fill_in("name", with:new_name)
       click_button("Update City")
     end

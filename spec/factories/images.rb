@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :image do
-    sequence(:caption) { |n| n%2==0 ? Faker::Lorem.sentence : nil }
+    sequence(:caption) { |n| n%2==0 ? Faker::Lorem.sentence(3).chomp(".") : nil }
     creator_id 1
 
     trait(:with_caption) do
-      caption { Faker::Lorem.sentence }
+      caption { Faker::Lorem.sentence(1).chomp(".") }
     end
     
   end

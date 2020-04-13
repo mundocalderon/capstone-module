@@ -33,10 +33,13 @@
 
 //= require capstone/subjects/subjects.module
 //= require capstone/subjects/images/images.service
+//= require capstone/subjects/images/image_things.service
+//= require capstone/subjects/images/image_linkable_things.service
 //= require capstone/subjects/images/images.component
 //= require capstone/subjects/images/images_authz.directive
 
 //= require capstone/subjects/things/things.service
+//= require capstone/subjects/things/thing_images.service
 //= require capstone/subjects/things/things.component
 //= require capstone/subjects/things/things_authz.directive
 
