@@ -67,9 +67,9 @@ describe "States API", type: :request do
     it_should_behave_like "resource modify", :state do
       let(:response_check) do
         #verify that name is not yet new_attribute
-        expect(resource.name).to_not eq(new_attribute[:name])
+        expect(resource["name"]).to_not eq(new_attribute[:name])
         #verify we can locate the created instance in DB
-        expect(State.find(resource.id).name).to eq(new_attribute[:name])
+        expect(State.find(resource["id"]).name).to eq(new_attribute[:name])
       end
     end
 

@@ -8,6 +8,11 @@ FactoryGirl.define do
       description { Faker::Lorem.sentence }
     end
 
+    trait :with_fields do
+      description { Faker::Lorem.paragraphs.join }
+      notes       { Faker::Lorem.paragraphs.join }
+    end
+
     trait :with_image do
       transient do
         image_count 1

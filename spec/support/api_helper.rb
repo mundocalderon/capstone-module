@@ -57,6 +57,7 @@ module ApiHelper
     if access_tokens?
       # @last_tokens=["uid","client","token-type","access-token"].inject({}) {|h,k| h[k]=response.headers[k] ; h }
       @last_tokens=response.headers.slice("uid","client","token-type","access-token")  
+
     end
     @last_tokens || {}
   end
@@ -65,6 +66,29 @@ module ApiHelper
     jpost path, FactoryGirl.attributes_for(factory)
     expect(response).to have_http_status(status) if status
     parsed_body
+  end
+
+  def apply_admin account
+    User.find(account[:id]).roles.create(:role_name=>Role::ADMIN)
+    return account
+  end
+  def apply_originator account, model_class
+    User.find(account[:id]).add_role(Role::ORIGINATOR, model_class).save
+    return account
+  end
+  def apply_role account, role, object
+    user=User.find(account[:id])
+    arr=object.kind_of?(Array) ? object : [object]
+    arr.each do |m|
+      user.add_role(role, m).save
+    end
+    return account
+  end
+  def apply_organizer account, object
+    apply_role(account,Role::ORGANIZER, object)
+  end
+  def apply_member account, object
+    apply_role(account, Role::MEMBER, object)
   end
 end
 
@@ -128,28 +152,30 @@ RSpec.shared_examples "resource create" do |model|
   end
 end
 
-RSpec.shared_examples "resource modify" do |model|
-  let(:resource) { FactoryGirl.create(model) }
-  let(:new_attribute) { FactoryGirl.attributes_for(model) }
+RSpec.shared_examples "modifiable resource" do |model|
+  let(:resource) do 
+    jpost send("#{model}s_path"), FactoryGirl.attributes_for(model)
+    expect(response).to have_http_status(:created)
+    parsed_body
+  end
+  let(:new_state) { FactoryGirl.attributes_for(model) }
 
   it "can update #{model}" do
-    #change to the new attribute
-    jput send("#{model}_path", resource.id), new_attribute
-    expect(response).to have_http_status(:no_content)
+      # change to new state
+      jput send("#{model}_path", resource["id"]), new_state
+      expect(response).to have_http_status(:no_content)
 
-    response_check if respond_to?(:response_check)
-  end
+      update_check if respond_to?(:update_check)
+    end
 
   it "can be deleted" do
-    #head request is the same as GET, except that it only responds with headers
-    jhead send("#{model}_path", resource.id)
+    jhead send("#{model}_path", resource["id"])
     expect(response).to have_http_status(:ok)
 
-    #issue delete
-    jdelete send("#{model}_path", resource.id)
+    jdelete send("#{model}_path", resource["id"])
     expect(response).to have_http_status(:no_content)
-
-    jhead send("#{model}_path", resource.id)
+    
+    jhead send("#{model}_path", resource["id"])
     expect(response).to have_http_status(:not_found)
   end
 end
