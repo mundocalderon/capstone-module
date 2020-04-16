@@ -18,7 +18,7 @@ describe "States API", type: :request do
   end
 
   context "a specific State exists" do
-    it_should_behave_like "resource show", :state do
+    it_should_behave_like "show resource", :state do
       let(:response_check) do
         expect(payload).to have_key("id")
         expect(payload).to have_key("name")
@@ -50,7 +50,7 @@ describe "States API", type: :request do
     #   expect(State.find(id).name).to eq(state_attributes[:name])
     # end
 
-    it_should_behave_like "resource create", :state do
+    it_should_behave_like "create resource", :state do
       let(:response_check) do
         # pp payload
         expect(payload).to have_key("name")
@@ -64,7 +64,7 @@ describe "States API", type: :request do
 
   context "existing State" do
 
-    it_should_behave_like "resource modify", :state do
+    it_should_behave_like "modifiable resource", :state do
       let(:response_check) do
         #verify that name is not yet new_attribute
         expect(resource["name"]).to_not eq(new_attribute[:name])

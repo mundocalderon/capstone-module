@@ -1,16 +1,24 @@
 class ThingsController < ApplicationController
+  include ActionController::Helpers
+  helper ThingsHelper
   before_action :set_thing, only: [:show, :update, :destroy]
   wrap_parameters :thing, include: ["name"]
   before_action :authenticate_user!, only: [:index, :create, :update, :destroy]
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: [:index]
 
   def index
-    @things = Thing.all
+    authorize Thing
+    @things = policy_scope(Thing.all)
+    @things = ThingPolicy.merge(@things)
   end
 
   def show
+    authorize @thing
   end
 
   def create
+    authorize Thing
     @thing = Thing.new(thing_params)
 
     if @thing.save
@@ -21,6 +29,9 @@ class ThingsController < ApplicationController
   end
 
   def update
+    authorize @thing
+
+
     if @thing.update(thing_params)
       head :no_content
     else
@@ -29,6 +40,7 @@ class ThingsController < ApplicationController
   end
 
   def destroy
+    authorize @thing
     @thing.destroy
 
     head :no_content
