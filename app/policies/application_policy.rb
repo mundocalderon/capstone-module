@@ -76,7 +76,6 @@ class ApplicationPolicy
     scope.select { |r| 
       if prev && prev.id == r.id
         prev.user_roles << r.role_name if r.role_name
-        false #toss this
       else 
         r.user_roles << r.role_name if r.role_name
         prev = r

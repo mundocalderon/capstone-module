@@ -4,6 +4,8 @@ require 'rails_helper'
 
 describe "States API", type: :request do
   include_context "db_cleanup_each"
+  let(:originator) { apply_originator(signup(FactoryGirl.attributes_for(:user)), Thing) }
+  let!(:user){ login originator }
 
   context "caller requests list of States" do
     it_should_behave_like "resource index", :state do
