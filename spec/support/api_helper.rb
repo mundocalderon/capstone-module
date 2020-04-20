@@ -69,17 +69,17 @@ module ApiHelper
   end
 
   def apply_admin account
-    User.find(account[:id]).roles.create(:role_name=>Role::ADMIN)
+    User.find(account.symbolize_keys[:id]).roles.create(:role_name=>Role::ADMIN)
     return account
   end
 
   def apply_originator account, model_class
-    User.find(account[:id]).add_role(Role::ORIGINATOR, model_class).save
+    User.find(account.symbolize_keys[:id]).add_role(Role::ORIGINATOR, model_class).save
     return account
   end
 
   def apply_role account, role, object
-    user=User.find(account[:id])
+    user=User.find(account.symbolize_keys[:id])
     arr=object.kind_of?(Array) ? object : [object]
     arr.each do |m|
       user.add_role(role, m).save
@@ -98,8 +98,8 @@ module ApiHelper
 end
 
 RSpec.shared_examples "resource index" do |model|
-  let!(:resources) { (1..5).map {|idx| FactoryGirl.create(model) } 
-  let!(:apply_roles) { apply_organizer User.find(user["id"]), resources }
+  let!(:resources) { (1..5).map {|idx| FactoryGirl.create(model) } }
+  let!(:apply_roles) { apply_organizer user, resources }
   let(:payload) { parsed_body }
 
   it "returns all #{model} instances" do
@@ -115,7 +115,7 @@ end
 
 RSpec.shared_examples "show resource" do |model|
   let(:resource) { FactoryGirl.create(model) }
-  let!(:apply_roles) { apply_organizer User.find(user["id"]), resource }
+  let!(:apply_roles) { apply_organizer user, resource }
   let(:bad_id) { 123456789 }
   let(:payload) { parsed_body }
 
@@ -168,12 +168,12 @@ RSpec.shared_examples "modifiable resource" do |model|
   let(:new_state) { FactoryGirl.attributes_for(model) }
 
   it "can update #{model}" do
-      # change to new state
-      jput send("#{model}_path", resource["id"]), new_state
-      expect(response).to have_http_status(:no_content)
+    # change to new state
+    jput send("#{model}_path", resource["id"]), new_state
+    expect(response).to have_http_status(:no_content)
 
-      update_check if respond_to?(:update_check)
-    end
+    update_check if respond_to?(:update_check)
+  end
 
   it "can be deleted" do
     jhead send("#{model}_path", resource["id"])
