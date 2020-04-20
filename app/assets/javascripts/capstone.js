@@ -22,6 +22,8 @@
 //= require capstone/authn/authn_session/authn_session.component
 //= require capstone/authn/authn_check/authn_check.directive
 
+//= require capstone/authz/authz.module
+
 //= require capstone/layout/layout.module 
 //= require capstone/layout/navbar/navbar.component 
 
