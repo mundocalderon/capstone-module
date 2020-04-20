@@ -15,6 +15,7 @@
         service.isAuthenticated = isAuthenticated;
         service.getCurrentUser = getCurrentUser;
         service.getCurrentUserName = getCurrentUserName;
+        service.getCurrentUserId = getCurrentUserId;
         service.login = login;
         service.logout = logout;
 
@@ -41,6 +42,9 @@
         }
         function getCurrentUser() {
           return service.user;
+        }
+        function getCurrentUserId() {
+          return service.user!=null ? service.user.id : null;
         }
 
         function login(credentials){
