@@ -6,12 +6,15 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
   include SubjectsUiHelper
 
   let(:authenticated) { create_user }
-  let(:originator)    { authenticated }
-  let(:image_props) { FactoryGirl.attributes_for(:image) }
-  let(:images)     { FactoryGirl.create_list(:image, 3,
-                                             :with_caption,
-                                             :creator_id=>originator[:id]) }
-  let(:image)      { images[0] }
+  let(:originator)    { create_user }
+  let(:organizer)     { originator }
+  let(:admin)         { apply_admin create_user }
+  let(:image_props)   { FactoryGirl.attributes_for(:image) }
+  let(:images)        { FactoryGirl.create_list(:image, 3,
+                                                :with_caption,
+                                                :with_roles,
+                                                :creator_id=>originator[:id])}
+  let(:image)         { images[0] }
 
   shared_examples "can list images" do
     it "lists images" do
@@ -48,7 +51,7 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
         expect(page).to have_field("image-caption",:with=>image_props[:caption])
         click_button("Create Image",:disabled=>false,:wait=>5)
         expect(page).to have_button("Clear Image",:wait=>5)
-        expect(page).to have_button("Delete Image")
+        expect(page).to have_button("Delete Image",:wait=>5)
         expect(page).to have_button("Update Image", :disabled=>true)
         expect(page).to have_no_button("Create Image")
         click_button("Clear Image")
@@ -88,6 +91,15 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
         expect(page).to have_field("image-caption", :with=>"")
         expect(page).to have_no_button("Clear Image")
         expect(page).to have_no_css(".id", :text=>image.id, :visible=>false)
+      end
+    end
+  end
+  shared_examples "cannot update image" do
+    it "caption is not updatable" do
+      within("cap-image-editor .image-form") do
+        #wait for controls to load
+        expect(page).to have_button("Clear Image")
+        expect(page).to have_field("image-caption", :with=>image.caption, :readonly=>true)
       end
     end
   end
@@ -164,6 +176,20 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
             ["Clear Image", "Update Image", "Delete Image"]
       it_behaves_like "can create image"
     end
+    context "organizer user" do
+      before(:each) { login organizer; visit_images images }
+      it_behaves_like "displays correct buttons for role", 
+            ["Create Image"], 
+            ["Clear Image", "Update Image", "Delete Image"]
+      it_behaves_like "can create image"
+    end
+    context "admin user" do
+      before(:each) { login admin; visit_images images }
+      it_behaves_like "displays correct buttons for role", 
+            ["Create Image"], 
+            ["Clear Image", "Update Image", "Delete Image"]
+      it_behaves_like "can create image"
+    end
   end
 
   context "images posted" do
@@ -183,17 +209,35 @@ RSpec.feature "AuthzImages", type: :feature, js:true do
         it_behaves_like "displays correct buttons for role", 
               ["Clear Image"], 
               ["Create Image", "Update Image", "Delete Image"]
-      end
-      context "authenticated user" do
-        before(:each) { login authenticated; find(".image-controls") }
-        it_behaves_like "displays correct buttons for role",
-              ["Clear Image", "Update Image", "Delete Image"],
-              ["Create Image"]
         it_behaves_like "can clear image"
-        it_behaves_like "can update image"
+        it_behaves_like "cannot update image"
+      end
+       context "authenticated user" do
+         before(:each) { login authenticated; find(".image-controls") }
+         it_behaves_like "displays correct buttons for role",
+              ["Clear Image"],
+              ["Create Image", "Update Image", "Delete Image"]
+        it_behaves_like "can clear image"
+        it_behaves_like "cannot update image"
+      end
+      context "organizer user" do
+        before(:each) { login organizer; find(".image-controls > span") }
+        it_behaves_like "displays correct buttons for role", 
+               ["Clear Image", "Update Image", "Delete Image"],
+               ["Create Image"]
+         it_behaves_like "can clear image"
+         it_behaves_like "can update image"
+         it_behaves_like "can delete image"
+       end
+      context "admin user" do
+        before(:each) { login admin; find(".image-controls > span") }
+        it_behaves_like "displays correct buttons for role", 
+              ["Clear Image", "Delete Image"],
+              ["Create Image", "Update Image"]
+        it_behaves_like "can clear image"
+        it_behaves_like "cannot update image"
         it_behaves_like "can delete image"
       end
-    end
-  end
-end
-
+     end
+   end
+ end

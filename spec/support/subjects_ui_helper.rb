@@ -7,20 +7,27 @@ module SubjectsUiHelper
     end
   end
 
-  def image_editor_loaded! image, expected_linkables=nil
-    within("cap-image-editor .image-form") do
-      expect(page).to have_css("span.image_id",:text=>image.id,:visible=>false)
-      expect(page).to have_css(".image-controls")
-      expect(page).to have_css("ul.image-things li span.thing_id",
-                              :visible=>false,
-                              :count=>ThingImage.where(:image=>image).count,
-                              :wait=>5)
-    end
-    if expected_linkables && logged_in? 
-      expect(page).to have_css(".link-things select option",
-          :count=>expected_linkables)
-    end
+  def get_linkables image
+    things=ThingPolicy::Scope.new(current_user, Thing.not_linked(image)).user_roles(true,false)
+    things=ThingPolicy.merge(things)
   end
+
+   def image_editor_loaded! image, expected_linkables=nil
+     within("cap-image-editor .image-form") do
+       expect(page).to have_css("span.image_id",:text=>image.id,:visible=>false)
+       expect(page).to have_css(".image-controls")
+       expect(page).to have_css("ul.image-things li span.thing_id",
+                               :visible=>false,
+                               :count=>ThingImage.where(:image=>image).count,
+                               :wait=>5)
+     end
+    expected_linkables ||= get_linkables(image).size
+     if expected_linkables && logged_in?
+      expect(page).to have_css(".link-things select option", :count=>expected_linkables)
+     end
+   end
+
+
 
   def visit_image image
     unless page.has_css?("cap-image-editor .image-form span.image_id", 
