@@ -6,7 +6,7 @@ class ImagesController < ApplicationController
   after_action :verify_policy_scoped, only: [:index]
 
   def index
-    authorized Image
+    authorize Image
     @images = policy_scope(Image.all)
     @images = ImagePolicy.merge(@images)
   end
