@@ -16,6 +16,9 @@
       bindings: {
         authz: "<"
       },
+      require: {
+        imagesAuthz: "^capImagesAuthz"
+      }
     });
 
 
@@ -57,6 +60,7 @@
                                      ];
   function ImageEditorController($scope, $q, $state, $stateParams, Authz, Image, ImageThing, ImageLinkableThing) {
     var vm=this;
+    vm.selected_linkables = [];
     vm.create = create;
     vm.clear = clear;
     vm.update = update;
@@ -80,6 +84,7 @@
     function newResource() {
       console.log("newResouce()");
       vm.item = new Image();
+      vm.imagesAuthz.newItem(vm.item);
       return vm.item;
     }
 
@@ -89,6 +94,7 @@
       vm.item = Image.get({id:itemId});
       vm.things = ImageThing.query({image_id:itemId});
       vm.linkable_things = ImageLinkableThing.query({image_id:itemId});
+      vm.imagesAuthz.newItem(vm.item);
       $q.all([vm.item.$promise, vm.things.$promise]).catch(handleError);
     }
 
