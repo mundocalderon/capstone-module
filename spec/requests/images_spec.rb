@@ -142,7 +142,6 @@ RSpec.describe "Images", type: :request do
       end
       login originator
       jget images_path
-      #pp parsed_body
       expect(response).to have_http_status(:ok)
       payload=parsed_body
       expect(payload.size).to eq(1)
