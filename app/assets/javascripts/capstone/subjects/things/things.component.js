@@ -31,13 +31,13 @@
     ThingSelectorController.$inject = ['$scope',
                                         '$stateParams',
                                         'capstone.subjects.Thing',
-                                        'capstone.authn.Authn'];
-    function ThingSelectorController($scope, $stateParams, Thing, Authn) {
+                                        'capstone.authz.Authz'];
+    function ThingSelectorController($scope, $stateParams, Thing, Authz) {
       var vm=this;
 
       vm.$onInit = function() {
         console.log("ThingSelectorController",$scope);
-        $scope.$watch( function(){ return Authn.getCurrentUser(); }, 
+        $scope.$watch( function(){ return Authz.getAuthorizedUserId(); }, 
                        function(){ if (!$stateParams.id) {vm.items = Thing.query(); }}
                       );
       }
@@ -49,9 +49,10 @@
 
     ThingEditorController.$inject = ['$scope', '$q',
                                       '$state','$stateParams',
+                                      'capstone.authz.Authz',
                                       'capstone.subjects.Thing',
                                       'capstone.subjects.ThingImage'];
-    function ThingEditorController($scope, $q, $state, $stateParams,Thing, ThingImage){
+    function ThingEditorController($scope, $q, $state, $stateParams, Authz, Thing, ThingImage){
       var vm = this;
       vm.create = create;
       vm.clear = clear;
@@ -62,11 +63,14 @@
 
       vm.$onInit = function() {
         console.log("ThingEditorController", $scope);
-        if ($stateParams.id) {
-          $scope.$watch(function(){ return vm.authz.authenticated }, function(){ reload($stateParams.id); });
-        }else{
-          newResource();
-        }
+        $scope.$watch(function(){ return Authz.getAuthorizedUserId(); }, 
+                      function(){ 
+                        if ($stateParams.id) {
+                          reload($stateParams.id);
+                        }else{
+                          newResource();
+                        }
+                      });
       }
       return;
 

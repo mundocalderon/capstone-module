@@ -30,15 +30,19 @@
 
   ImageSelectorController.$inject = ["$scope",
                                      "$stateParams",
+                                     "capstone.authz.Authz",
                                      "capstone.subjects.Image"];
-  function ImageSelectorController($scope, $stateParams, Image) {
+  function ImageSelectorController($scope, $stateParams, Authz, Image) {
     var vm=this;
 
     vm.$onInit = function() {
       console.log("ImageSelectorController",$scope);
-      if (!$stateParams.id) {
-        vm.items = Image.query();
-      }
+      $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
+                    function(){ 
+                      if (!$stateParams.id) {
+                        vm.items = Image.query();
+                      }
+                    });
     }
     return;
     //////////////
@@ -46,11 +50,12 @@
 
   ImageEditorController.$inject = ["$scope", "$q",
                                      "$state","$stateParams",
+                                     "capstone.authz.Authz",
                                      "capstone.subjects.Image",
                                      "capstone.subjects.ImageThing",
                                      "capstone.subjects.ImageLinkableThing",
                                      ];
-  function ImageEditorController($scope, $q, $state, $stateParams, Image, ImageThing, ImageLinkableThing) {
+  function ImageEditorController($scope, $q, $state, $stateParams, Authz, Image, ImageThing, ImageLinkableThing) {
     var vm=this;
     vm.create = create;
     vm.clear = clear;
@@ -60,16 +65,20 @@
 
     vm.$onInit = function() {
       console.log("ImageEditorController",$scope);
-      if ($stateParams.id) {
-        $scope.$watch(function(){ return vm.authz.authenticated }, function(){ reload($stateParams.id); }); 
-      }else{
-        newResource();
-      }
+      $scope.$watch(function(){ return Authz.getAuthorizedUserId(); }, 
+                    function(){ 
+                      if ($stateParams.id) {
+                        reload($stateParams.id); 
+                      } else {
+                        newResource();
+                      }
+                    }); 
     }
     return;
     //////////////
 
     function newResource() {
+      console.log("newResouce()");
       vm.item = new Image();
       return vm.item;
     }

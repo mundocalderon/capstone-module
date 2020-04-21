@@ -23,6 +23,10 @@
 //= require capstone/authn/authn_check/authn_check.directive
 
 //= require capstone/authz/authz.module
+//= require capstone/authz/authz.service
+//= require capstone/authz/base_policy.service
+
+
 
 //= require capstone/layout/layout.module 
 //= require capstone/layout/navbar/navbar.component 
@@ -39,9 +43,10 @@
 //= require capstone/subjects/images/image_linkable_things.service
 //= require capstone/subjects/images/images.component
 //= require capstone/subjects/images/images_authz.directive
+//= require capstone/subjects/images/images_authz.service
 
 //= require capstone/subjects/things/things.service
 //= require capstone/subjects/things/thing_images.service
 //= require capstone/subjects/things/things.component
 //= require capstone/subjects/things/things_authz.directive
-
+//= require capstone/subjects/things/things_authz.service
