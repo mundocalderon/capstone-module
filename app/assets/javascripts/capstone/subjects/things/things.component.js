@@ -16,6 +16,9 @@
             bindings: {
               authz: "<"
             },
+            require: {
+              thingsAuthz : "^capThingsAuthz"
+            } 
         });
 
     thingSelectorTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
@@ -77,6 +80,7 @@
 
       function newResource(){
         vm.item = new Thing();
+        vm.thingsAuthz.newItem(vm.item);
         return vm.item;
       }
 
@@ -85,6 +89,7 @@
         console.log("re/loading thing", itemId);
         vm.images = ThingImage.query({thing_id:itemId});
         vm.item = Thing.get({id:itemId});
+        vm.thingsAuthz.newItem(vm.item);
         vm.images.$promise.then(
           function(){
             angular.forEach(vm.images, function(ti){
