@@ -10,6 +10,8 @@ gem 'pundit', '~>1.1.0'
 gem 'exifr', '~> 1.2.5'
 gem 'mini_magick', '~> 4.9.4'
 gem 'geokit-rails', '~>2.2.0'
+gem 'pry', '~> 0.12.2'
+
 
 gem 'sass-rails', '~> 5.0.6'
 gem 'uglifier', '~> 3.0.2'
