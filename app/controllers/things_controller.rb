@@ -3,7 +3,7 @@ class ThingsController < ApplicationController
   helper ThingsHelper
   before_action :set_thing, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  wrap_parameters :thing, include: ["name", "description", "notes"]
+  wrap_parameters :thing, include: ["name", "description", "notes", "thing_type_id"]
   after_action :verify_authorized
   after_action :verify_policy_scoped, only: [:index]
 
@@ -63,6 +63,6 @@ class ThingsController < ApplicationController
     def thing_params
       params.require(:thing).tap {|p|
           p.require(:name) #throws ActionController::ParameterMissing
-        }.permit(:name, :description, :notes)
+        }.permit(:name, :description, :notes, :thing_type_id)
     end
 end
