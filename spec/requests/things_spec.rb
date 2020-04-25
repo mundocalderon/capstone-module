@@ -40,7 +40,7 @@ RSpec.describe "Things", type: :request do
     it "creates and has user_roles #{user_roles}" do
       jpost things_path, thing_props
       expect(response).to have_http_status(:created)
-      #pp parsed_body
+      # pp parsed_body
       payload=parsed_body
       expect(payload).to include("id")
       expect(payload).to include("name"=>thing_props[:name])
@@ -48,6 +48,7 @@ RSpec.describe "Things", type: :request do
       expect(payload).to include("notes"=>thing_props[:notes])
       expect(payload).to include("user_roles")
       expect(payload["user_roles"]).to include(*user_roles)
+      expect(payload).to include("thing_type_id"=>thing_props[:thing_type_id])
     end
     it "reports error for invalid data" do
       jpost things_path, thing_props.except(:name)
@@ -74,11 +75,32 @@ RSpec.describe "Things", type: :request do
       expect(response).to have_http_status(:no_content)
     end
   end
+  shared_examples "field(s) partly redacted" do
+    it "list does not show non-members" do
+      jget things_path
+      expect(response).to have_http_status(:ok)
+      parsed_body
+      payload=parsed_body
+      expect(payload.size).to eq(0)
+    end
+    it "get does not include notes but does thing type" do
+      jget thing_path(thing)
+      expect(response).to have_http_status(:ok)
+      payload=parsed_body
+      expect(payload).to include("id"=>thing.id)
+      expect(payload).to include("name"=>thing.name)
+      expect(payload).to include("description")
+      expect(payload).to_not include("notes")
+      expect(payload).to_not include("user_roles")
+      expect(payload).to include("thing_type_id")
+    end
+  end
+
   shared_examples "field(s) redacted" do
     it "list does not show non-members" do
       jget things_path
       expect(response).to have_http_status(:ok)
-      #pp parsed_body
+      # pp parsed_body
       payload=parsed_body
       expect(payload.size).to eq(0)
     end
@@ -97,7 +119,7 @@ RSpec.describe "Things", type: :request do
     it "list does include notes and user_roles #{user_roles}" do
       jget things_path
       expect(response).to have_http_status(:ok)
-      #pp parsed_body
+      # pp parsed_body
       payload=parsed_body
       expect(payload.size).to_not eq(0)
       payload.each do |r|
@@ -107,12 +129,14 @@ RSpec.describe "Things", type: :request do
         expect(r).to include("notes")
         expect(r).to include("user_roles")
         expect(r["user_roles"].to_a).to include(*user_roles)
+        expect(r).to include("thing_type_id")
+
       end
     end
     it "get does include notes and user_roles #{user_roles}" do
       jget thing_path(thing)
       expect(response).to have_http_status(:ok)
-      #pp parsed_body
+      # pp parsed_body
       payload=parsed_body
       expect(payload).to include("id"=>thing.id)
       expect(payload).to include("name"=>thing.name)
@@ -120,6 +144,8 @@ RSpec.describe "Things", type: :request do
       expect(payload).to include("notes")
       expect(payload).to include("user_roles")
       expect(payload["user_roles"].to_a).to include(*user_roles)
+      expect(payload).to include("thing_type_id")
+
     end
   end
 
@@ -150,7 +176,7 @@ RSpec.describe "Things", type: :request do
       it_should_behave_like "cannot create", :forbidden
       it_should_behave_like "cannot update", :forbidden
       it_should_behave_like "cannot delete", :forbidden
-      it_should_behave_like "field(s) redacted"
+      it_should_behave_like "field(s) partly redacted"
     end
 
     context "caller is member" do

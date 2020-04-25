@@ -5,6 +5,9 @@ FactoryGirl.define do
     sequence(:description) {|n| n%5==0 ? nil : Faker::Lorem.paragraphs.join}
     sequence(:notes) {|n| n%5<2 ? nil : Faker::Lorem.paragraphs.join}
 
+    thing_type_id { create(:thing_type).id }
+    
+
     trait :with_image do
       transient do
         image_count 1

@@ -5,10 +5,19 @@ RSpec.describe Thing, type: :model do
 
   context "valid thing" do
     let(:thing) { FactoryGirl.create(:thing) }
+    let(:thing_types) {FactoryGirl.create_list(:thing_type, 3)}
+
 
     it "creates new instance" do
       db_thing=Thing.find(thing.id)
       expect(db_thing.name).to eq(thing.name)
+    end
+
+    it "creates new instance with a pre-existing type" do
+      thing_types
+      db_thing= FactoryGirl.create(:thing, :thing_type => ThingType.last)
+      expect(db_thing.thing_type).to eq(ThingType.last)
+      expect(db_thing.thing_type.id).to eq(ThingType.count)
     end
   end
 
