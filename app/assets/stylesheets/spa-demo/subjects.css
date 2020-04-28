@@ -11,3 +11,7 @@ sd-thing-editor form {
   padding-left: 15px;
   padding-right: 15px;
 }
+
+input.thing-type-radio {
+	margin:0 5px 0 5px;
+}

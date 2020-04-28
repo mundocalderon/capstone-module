@@ -3,7 +3,7 @@ class ThingTypesController < ApplicationController
   helper ThingsHelper
   before_action :set_thing_type, only: [:show, :typed_things]
   before_action :get_thing, only: [:typify_things]
-  before_action :authenticate_user!, only: [:typify_things, :index, :show, :typed_things] #[:show, :update, :destroy] [:create, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :show, :typed_things] #[:show, :update, :destroy] [:create, :update, :destroy]
   wrap_parameters :thing_type, include: ["name", "description"]
   after_action :verify_authorized
   #after_action :verify_policy_scoped, only: [:index]
@@ -18,8 +18,9 @@ class ThingTypesController < ApplicationController
 
   #thing_typify_things GET    /api/things/:thing_id/typify_things(.:format)
   def typify_things #showing list of all types for a thing if user is an organizer or admin
-    authorize @thing, get_types?
+    authorize @thing, :get_types?
     @thing_types = policy_scope(ThingType.all)
+    render :index
   end
 
   #thing_type GET    /api/thing_types/:id
@@ -27,13 +28,13 @@ class ThingTypesController < ApplicationController
     authorize @thing_type
   end
 
-  #thing_type_typed_thingss GET  /api/thing_types/:thing_type_id/typed_things
+  #typed_things_thing_type GET    /api/thing_types/:id/typed_things(.:format)
   def typed_things
     authorize Thing, :get_typed?
     thing_type = ThingType.find(params[:id])
     @things= thing_type.things
 
-    # Policy scoping and merging seems unnecessary since any authenticated use can view things by type
+    # Policy scoping and merging seems unnecessary since any authenticated user can view things by type
     # @things=ThingPolicy::Scope.new(current_user,@things).user_roles(true,false)
     # @things=ThingPolicy.merge(@things)
     render "things/index"

@@ -1,0 +1,56 @@
+<div class="thing-type-form" ng-show="$ctrl.item">
+	<div class="thing-name row col-lg-12">
+	  <label class="col-xs-3">Thing Type Name:</label>
+	  <input class="col-xs-9"
+	         name="thing-name" 
+	         data-ng-model="$ctrl.item.name" 
+	         ng-readonly="!$ctrl.authz.canUpdate"
+	         required="required"
+	         maxlength="40"
+	         pattern=".{3,}" title="3 character minimum for Name"/>
+	  <span class="invalid">{{$ctrl.item.errors.name}}</span>
+	</div>
+
+	<div class="thing-desc row col-lg-12">
+	  <label class="col-xs-3">Thing Type Description:</label>
+	  <textarea class="col-xs-9"
+	         name="thing-type-description" 
+	         ng-model="$ctrl.item.description" 
+	         ng-readonly="!$ctrl.authz.canUpdate"
+	         type="text"
+	         size="80"
+	         maxlength="4000"/>
+	  <span class="invalid">{{$ctrl.item.errors.description}}</span>
+	</div>
+
+  <div class="thing-controls">
+    <div ng-show="$ctrl.item.id">
+      <button name="image-clear"
+              type="submit"
+              ng-click="$ctrl.clear()">Clear Thing</button>
+    </div>
+  </div>
+</div>
+
+<div class="thing-type-list" >
+  <ul>
+    <li ng-repeat="item in $ctrl.items | orderBy:'id'">
+      <a ui-sref="thingTypes({id:item.id})">
+         <span class="thing_type_id id">{{item.name}}:</span>
+         {{item.description}}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="thing-list row col-lg-12">
+  <ul>
+    <li ng-repeat="thing in $ctrl.things | orderBy:'name'">
+      <a ui-sref="things({id:thing.id})">
+         <span class="thing_id id">{{thing.id}}</span>
+         {{thing.name}}
+      <span ng-show="$ctrl.authz.canUpdateItem(thing)"> *</span>
+      </a>
+    </li>
+  </ul>
+</div>

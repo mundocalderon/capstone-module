@@ -40,7 +40,7 @@ class ThingPolicy < ApplicationPolicy
   end
 
   def get_types?
-    organizer_or_admin?
+    true
   end
 
   def get_typed?

@@ -40,6 +40,15 @@
     <span class="invalid">{{$ctrl.item.errors.notes}}</span>
   </div>
 
+  <div class="thing-type-list row col-lg-12" ng-show="thingform.$valid && $ctrl.authz.authenticated">
+    <label class="col-xs-3">Thing Type Options:</label>
+      <span class="thing-type-radio" ng-repeat="ttype in $ctrl.types">
+        <input class="thing-type-radio" type="radio" name="thing-type" ng-model="$ctrl.item.thing_type_id" value="{{ttype.id}}" ng-disabled="!$ctrl.authz.canUpdateType" />
+        {{ttype.name}}
+     </span>
+    <span class="invalid">{{$ctrl.item.errors}}</span>
+  </div>
+
   <div class="thing-images row col-lg-12">
     <label class="col-xs-3">Related Images:</label>
     <ul class="thing-images col-xs-9">
