@@ -7,9 +7,6 @@
 
   ThingTypeThingFactory.$inject = ["$resource","spa-demo.config.APP_CONFIG"];
   function ThingTypeThingFactory($resource, APP_CONFIG) {
-    var service = $resource(APP_CONFIG.server_url + "/api/thing_types/:id/typed_things",
-        { id: '@id'},
-      );
-    return service;
+    return $resource(APP_CONFIG.server_url + "/api/thing_types/:id/typed_things");
   }
 })();
