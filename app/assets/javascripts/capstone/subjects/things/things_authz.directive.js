@@ -14,9 +14,6 @@
         controller: ThingsAuthzController,
         controllerAs: "vm",
         restrict: "A",
-        scope: {
-          authz: "="   //updates parent scope with authz evals
-        },
         link: link
     };
     return directive;
