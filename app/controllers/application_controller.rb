@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
   rescue_from Mongoid::Errors::DocumentNotFound, with: :record_not_found
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
+  rescue_from Mongoid::Errors:Validation, with: :mongoid_validation_error
 
   protected
   def full_message_error full_message, status
@@ -43,4 +43,9 @@ class ApplicationController < ActionController::API
     Rails.logger.debug exception
   end
 
+  def mongoid_validation_error(exception) 
+    payload = { errors:exception.record.errors.messages }
+    render :json=>payload, :status=>:unprocessable_entity
+    Rails.logger.debug exception.message
+  end
 end
