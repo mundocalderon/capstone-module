@@ -95,6 +95,19 @@ module ApiHelper
     apply_role(account, Role::MEMBER, object)
   end
 
+    #returns a hash without the content property
+  def except_content original
+    if original[:image_content] && original[:image_content][:content] 
+      clone=original.clone
+      bytes=original[:image_content][:content].size
+      clone[:image_content]=original[:image_content].clone
+      clone[:image_content][:content]="#{bytes} bytes"
+      return clone
+    else
+      return original
+    end
+  end
+
 end
 
 RSpec.shared_examples "resource index" do |model|
