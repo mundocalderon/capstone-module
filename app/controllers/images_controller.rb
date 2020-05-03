@@ -1,8 +1,8 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :update, :destroy]
+  before_action :set_image, only: [:show, :update, :destroy, :content]
   wrap_parameters :image, include: ["caption"]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  after_action :verify_authorized
+  after_action :verify_authorized, except: [:content]
   after_action :verify_policy_scoped, only: [:index]
 
   def index
@@ -17,6 +17,18 @@ class ImagesController < ApplicationController
     @image = ImagePolicy.merge(images).first
   end
 
+  def content
+    result = ImageContent.image(@image).smallest.first
+    if result
+      options = { type: result.content_type,
+                  disposition: "inline",
+                  filename: "#{@image.basename}.#{result.suffix}"}
+      send_data result.content.data, options
+    else
+      render nothing: true, status: :not_found
+    end
+  end
+
   def create
     authorize Image
     @image = Image.new(image_params)
@@ -24,10 +36,14 @@ class ImagesController < ApplicationController
 
     User.transaction do
       if @image.save
-        role=current_user.add_role(Role::ORGANIZER, @image)
-        @image.user_roles << role.role_name
-        role.save!
-        render :show, status: :created, location: @image
+        original = ImageContent.new(image_content_params)
+        contents = ImageContentCreator.new(@image, original).build_contents
+        if(contents.save!)
+          role=current_user.add_role(Role::ORGANIZER, @image)
+          @image.user_roles << role.role_name
+          role.save!
+          render :show, status: :created, location: @image
+        end
       else
         render json: {errors:@image.errors.messages}, status: :unprocessable_entity
       end
@@ -61,5 +77,12 @@ class ImagesController < ApplicationController
 
     def image_params
       params.require(:image).permit(:caption)
+    end
+
+    def image_content_params
+      params.require(:image_content).tap { |ic| 
+        ic.require(:content_type)
+        ic.require(:content)
+      }.permit(:content_type, :content)
     end
 end

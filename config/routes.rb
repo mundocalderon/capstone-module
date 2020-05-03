@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "images/:id/content", as: :image_content, controller: :images, action: :content, defaults:{format: :jpg} 
   get "/client-assets/:name.:format", :to => redirect("/client/client-assets/%{name}.%{format}")
 #  get "/", :to => redirect("/client/index.html")
 
