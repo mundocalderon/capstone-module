@@ -8,6 +8,7 @@
 //= require ng-token-auth
 //= require ng-file-upload-shim
 //= require ng-file-upload
+//= require ui-cropper
 
 //= require capstone/app.module
 //= require capstone/app.router

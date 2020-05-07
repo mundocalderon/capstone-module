@@ -2,6 +2,7 @@
  * Stylesheet Manifest file
  *
  *= require bootstrap
+ *= require ui-cropper
  *= require capstone/layout
  *= require capstone/authn
  *= require capstone/subjects
