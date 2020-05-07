@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
   rescue_from Mongoid::Errors::DocumentNotFound, with: :record_not_found
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  rescue_from Mongoid::Errors:Validation, with: :mongoid_validation_error
+  rescue_from Mongoid::Errors::Validations, with: :mongoid_validation_error
 
   protected
   def full_message_error full_message, status
