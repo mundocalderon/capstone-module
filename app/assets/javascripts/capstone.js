@@ -6,6 +6,8 @@
 //= require angular-resource
 //= require angular-cookie
 //= require ng-token-auth
+//= require ng-file-upload-shim
+//= require ng-file-upload
 
 //= require capstone/app.module
 //= require capstone/app.router
@@ -30,6 +32,9 @@
 
 //= require capstone/layout/layout.module 
 //= require capstone/layout/navbar/navbar.component 
+//= require capstone/layout/image_loader/data_utils.service.js
+//= require capstone/layout/image_loader/image_loader.component.js
+
 
 
 //= require capstone/cities/cities.module

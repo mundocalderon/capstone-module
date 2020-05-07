@@ -4,6 +4,7 @@
     angular
         .module('capstone', [
             'ui.router',
+            'ngFileUpload',
             'capstone.config',
             'capstone.authn',
             'capstone.authz',
