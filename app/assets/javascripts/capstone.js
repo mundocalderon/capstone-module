@@ -32,10 +32,11 @@
 
 
 //= require capstone/layout/layout.module 
+//= require capstone/layout/image_query_size.service
 //= require capstone/layout/navbar/navbar.component 
-//= require capstone/layout/image_loader/data_utils.service.js
-//= require capstone/layout/image_loader/image_loader.component.js
-
+//= require capstone/layout/image_loader/data_utils.service
+//= require capstone/layout/image_loader/image_loader.component
+//= require capstone/layout/image_viewer/image_viewer.component 
 
 
 //= require capstone/cities/cities.module

@@ -90,3 +90,56 @@ img.image-preview {
 /* Super-extra small */
 @media (max-width: 479px) {
 }
+
+/*** image viewer ****/
+cap-image-viewer img {
+    width: 100%;  
+}
+
+cap-image-viewer .overlay {
+  color: white;
+  opacity: 0.0;
+  z-index: 1002;  
+  cursor: pointer;
+}
+cap-image-viewer .overlay:hover {
+  opacity: 1;
+}
+
+
+cap-image-viewer .image-area  {
+  position: relative;
+}
+
+cap-image-viewer .caption {
+  text-align: center;
+  font-size: 1.2em;
+  background: rgba(204, 204, 204, 0.5);
+
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 5px;
+  height: 35px;
+}
+
+cap-image-viewer .glyphicon {
+  font-size: 5em;
+}
+cap-image-viewer span.image-browse {
+  position: absolute;
+  top: 10px;
+  right: 10px;  
+  background-color: grey;
+}
+
+cap-image-viewer .glyphicon-chevron-left {
+  position: absolute;
+  top: 40%;
+  left: 20px;
+}
+cap-image-viewer .glyphicon-chevron-right {
+  position: absolute;
+  top: 40%;
+  right: 20px;
+}
