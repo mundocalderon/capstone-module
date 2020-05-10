@@ -16,4 +16,4 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-CapstoneModuleOne::Application.config.secret_token = '128d5f4a8f75554887361bfba76525063ce9fb52e1f52c81fd3101478ce4a611017ac29850b3d1ce5d456d0a8ea842717afd9a9c7e651c5f6a6b58dc564d6934'
+CapstoneModuleOne::Application.config.secret_key_base = '128d5f4a8f75554887361bfba76525063ce9fb52e1f52c81fd3101478ce4a611017ac29850b3d1ce5d456d0a8ea842717afd9a9c7e651c5f6a6b58dc564d6934'
