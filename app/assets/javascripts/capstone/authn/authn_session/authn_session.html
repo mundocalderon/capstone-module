@@ -40,6 +40,9 @@
   <form id="logout-form" 
         ng-submit="$ctrl.logout()">
     <span id="user_id" class="id" ng-if="$ctrl.getCurrentUser()">{{$ctrl.getCurrentUser().id}}</span>
+    <div ng-if="$ctrl.getCurrentUser().image_id" class="image-area">
+      <img class="center-block" style="width: 50px" ng-src="{{$ctrl.whoAmI.user_image_url}}?width=50"/>
+    </div>
     <div id="logout-identity">
       <label>{{$ctrl.getCurrentUserName()}}</label>
       <button type="submit" 

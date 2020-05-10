@@ -14,17 +14,24 @@
     return APP_CONFIG.authn_session_html;
   }    
 
-  AuthnSessionController.$inject = ["$scope", "capstone.authn.Authn"];
-  function AuthnSessionController($scope, Authn) {
+  AuthnSessionController.$inject = ["$scope", "capstone.authn.Authn", "capstone.authn.whoAmI"];
+  function AuthnSessionController($scope, Authn, whoAmI) {
     var vm=this;
     vm.loginForm = {}
     vm.login = login;
     vm.logout = logout;
     vm.getCurrentUser = Authn.getCurrentUser;
     vm.getCurrentUserName = Authn.getCurrentUserName;
+    // vm.getCurrentUserImageUrl = whoAmI.
 
     vm.$onInit = function() {
       console.log("AuthnSessionController",$scope);
+        vm.whoAmI = null;
+        whoAmI.get().$promise.then(
+          function(value){ vm.whoAmI = value; },
+          function(value){ vm.whoAmI = value; }
+        );
+      
     }
 
     vm.$postLink = function() {
