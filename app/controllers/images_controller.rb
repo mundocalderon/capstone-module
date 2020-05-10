@@ -9,7 +9,8 @@ class ImagesController < ApplicationController
 
   def index
     authorize Image
-    @images = policy_scope(Image.all)
+    # @images = policy_scope(Image.all)
+    @images = policy_scope(Image.joins('LEFT OUTER JOIN users ON users.image_id = images.id').where('users.image_id IS NULL'))
     @images = ImagePolicy.merge(@images)
   end
 
@@ -41,13 +42,24 @@ class ImagesController < ApplicationController
 
     User.transaction do
       if @image.save
-        original = ImageContent.new(image_content_params)
-        contents = ImageContentCreator.new(@image, original).build_contents
-        if(contents.save!)
-          role=current_user.add_role(Role::ORGANIZER, @image)
-          @image.user_roles << role.role_name
-          role.save!
-          render :show, status: :created, location: @image
+        if !@image.caption.nil? && @image.caption.include?("user_image")
+          puts "user_image create"
+          user_image = ImageContent.new(image_content_params)
+          contents = ImageContentCreator.new(@image, user_image).build_contents([ImageContent::THUMBNAIL, ImageContent::LARGE])
+          contents.save!
+          @image.user = current_user
+          @image.save!
+          head :no_content
+        else
+          puts "regular image create"
+          original = ImageContent.new(image_content_params)
+          contents = ImageContentCreator.new(@image, original).build_contents
+          if(contents.save!)
+            role=current_user.add_role(Role::ORGANIZER, @image)
+            @image.user_roles << role.role_name
+            role.save!
+            render :show, status: :created, location: @image
+          end
         end
       else
         render json: {errors:@image.errors.messages}, status: :unprocessable_entity
