@@ -221,7 +221,7 @@ RSpec.describe "ImageContent", type: :model do
       creator.build_contents
       expect(creator.save!).to eq true
     end
-
+  end
 
 
   context "content for image" do
