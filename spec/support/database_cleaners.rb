@@ -1,5 +1,8 @@
 require 'database_cleaner'
 
+DatabaseCleaner.allow_production = true
+DatabaseCleaner.allow_remote_database_url = true
+
 shared_context "db_cleanup" do |ar_strategy=:truncation|
   before(:all) do
   	DatabaseCleaner[:mongoid].strategy = :truncation
