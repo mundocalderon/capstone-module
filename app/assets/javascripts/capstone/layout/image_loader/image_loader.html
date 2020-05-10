@@ -1,3 +1,4 @@
+
 <div class="crop-area" ng-show="$ctrl.file">
  <ui-cropper image="$ctrl.file"
              result-image="$ctrl.dataUri"
@@ -8,12 +9,10 @@
              result-image-size="{w:1200,h:800}">
  </ui-cropper>
 </div>
-
 <input name="image-file"
        type="file"
        accept=".jpeg"
        ng-hide="$ctrl.file" 
-       required="true"
        ngf-select
        ng-model="$ctrl.file"
        ngf-fix-orientation="true"
@@ -25,6 +24,8 @@
      ng-show="$ctrl.file && $ctrl.objectUrl">         
 
 <div ng-transclude></div>
+
+
 
 <!--
 <button ng-click="$ctrl.debug()">Debug</button>
