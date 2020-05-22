@@ -36,18 +36,18 @@ Capybara.register_driver :selenium do |app|
   end
 end
 
-# require 'capybara/poltergeist'
-# Capybara.configure do |config|
-#   config.default_driver = :rack_test
-#   config.javascript_driver = :poltergeist
-# end
-# Capybara.register_driver :poltergeist do |app|
-#   Capybara::Poltergeist::Driver.new(app,
-#     js_errors: false,
-#     phantomjs_logger: StringIO.new,
-#     # logger: STDERR
-#     )
-# end
+require 'capybara/poltergeist'
+Capybara.configure do |config|
+  config.default_driver = :rack_test
+  config.javascript_driver = :poltergeist
+end
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app,
+    js_errors: false,
+    phantomjs_logger: StringIO.new,
+    # logger: STDERR
+    )
+end
 
 if ENV["COVERAGE"]
   require 'simplecov'
