@@ -4,10 +4,10 @@ class Geocoder
 		location(geoloc)
 	end
 
-	def reverse_geocode point
-		geoloc=Geokit::Geocoders:GoogleGeocoder.reverse_geocode point
-		location(geoloc)
-	end
+  def reverse_geocode point
+    geoloc=Geokit::Geocoders::GoogleGeocoder.reverse_geocode point.latlng
+    location(geoloc)
+  end
 
 	def location geoloc
 		if geoloc && geoloc.lng && geoloc.lat
