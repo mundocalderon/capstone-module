@@ -14,11 +14,13 @@ Rails.application.routes.draw do
     resources :things, except: [:new, :edit] do
       resources :thing_images, only: [:index, :create, :update, :destroy]
     end
+    get 'geocoder/addresses' => "geocoder#addresses"
+    get 'geocoder/positions' => "geocoder#positions"
+    get "images/:id/content", as: :image_content, controller: :images, action: :content, defaults:{format: :jpg} 
   end
 
-  get "images/:id/content", as: :image_content, controller: :images, action: :content, defaults:{format: :jpg} 
   get "/client-assets/:name.:format", :to => redirect("/client/client-assets/%{name}.%{format}")
-#  get "/", :to => redirect("/client/index.html")
+  #get "/", :to => redirect("/client/index.html")
 
   get '/ui' => 'ui#index'
   get '/ui#' => 'ui#index'
