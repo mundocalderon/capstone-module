@@ -17,6 +17,8 @@ class Image < ActiveRecord::Base
 	# ValueObject’s initialize method (for the reader to be able to 
 	# instantiate a VO with the record’s values).
   composed_of :position, class_name: "Point", allow_nil: true, mapping: [%w(lng lng), %w(lat lat)]
+  
+  #Geokit macro
   acts_as_mappable
 
   def to_lat_lng
