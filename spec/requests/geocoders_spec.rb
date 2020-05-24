@@ -102,7 +102,7 @@ RSpec.describe "Geocoders", type: :request do
         jget geocoder_addresses_path, {:address=>search_address}
         expect(response).to have_http_status(:ok)
         expect(CachedLocation.by_address(search_address).count).to eq(1)
-        #pp parsed_body
+        # pp parsed_body
 
         #with request header
         3.times do 
@@ -126,7 +126,7 @@ RSpec.describe "Geocoders", type: :request do
         jget geocoder_positions_path, search_position.to_hash
         expect(response).to have_http_status(:ok)
         expect(CachedLocation.by_position(search_position).count).to eq(1)
-        #pp parsed_body
+        # pp parsed_body
 
         #no request header
         3.times do
