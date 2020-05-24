@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
     get 'geocoder/addresses' => "geocoder#addresses"
     get 'geocoder/positions' => "geocoder#positions"
+    get 'subjects' => "thing_images#subjects" 
     get "images/:id/content", as: :image_content, controller: :images, action: :content, defaults:{format: :jpg} 
   end
 
