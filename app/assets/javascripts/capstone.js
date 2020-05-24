@@ -29,7 +29,8 @@
 //= require capstone/authz/authz.service
 //= require capstone/authz/base_policy.service
 
-
+//= require capstone/geoloc/geoloc.module
+//= require capstone/geoloc/geocoder.service
 
 //= require capstone/layout/layout.module 
 //= require capstone/layout/image_query_size.service
