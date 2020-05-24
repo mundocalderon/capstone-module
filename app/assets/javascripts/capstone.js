@@ -31,6 +31,9 @@
 
 //= require capstone/geoloc/geoloc.module
 //= require capstone/geoloc/geocoder.service
+//= require capstone/geoloc/current_origin/current_origin.service
+//= require capstone/geoloc/current_origin/current_origin_selector.component
+
 
 //= require capstone/layout/layout.module 
 //= require capstone/layout/image_query_size.service
