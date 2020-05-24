@@ -26,6 +26,7 @@
     vm.clearOrigin=clearOrigin;
     vm.isCurrentLocationSupported = myLocation.isCurrentLocationSupported;
     vm.useCurrentLocation=useCurrentLocation;
+    vm.myPositionError=null;
 
     vm.$onInit = function() {
       console.log("CurrentOriginSelectorController",$scope);
@@ -53,8 +54,13 @@
         function(location){
           console.log("useCurrentLocation", location);
           currentOrigin.setLocation(location);
+          vm.myPositionError=null;
+        },
+        function(err){
+          console.log(err);
+          vm.myPositionError=err;
         });
     } 
-        
+
   }
 })(); 
