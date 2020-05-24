@@ -32,7 +32,10 @@ Capybara.register_driver :selenium do |app|
       require 'selenium/webdriver'
       Selenium::WebDriver::Firefox::Binary.path = ENV['FIREFOX_BINARY_PATH']
     end
-     Capybara::Selenium::Driver.new(app, :browser=>:firefox)
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile["geo.prompt.testing"]=true
+    profile["geo.prompt.testing.allow"]=true
+    Capybara::Selenium::Driver.new(app, :browser=>:firefox, :profile=>profile)
   end
 end
 
