@@ -31,6 +31,7 @@
 
 //= require capstone/geoloc/geoloc.module
 //= require capstone/geoloc/geocoder.service
+//= require spa-demo/geoloc/my_location.service 
 //= require capstone/geoloc/current_origin/current_origin.service
 //= require capstone/geoloc/current_origin/current_origin_selector.component
 
