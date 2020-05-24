@@ -2,10 +2,10 @@
   "use strict";
 
   angular
-    .module("spa-demo.geoloc")
+    .module("capstone.geoloc")
     .config(JhuLocationOverride);
 
-  JhuLocationOverride.$inject=["spa-demo.geoloc.myLocationProvider"];
+  JhuLocationOverride.$inject=["capstone.geoloc.myLocationProvider"];
   function JhuLocationOverride(myLocationProvider) {
     myLocationProvider.usePositionOverride({
       longitude:-76.6200464, 

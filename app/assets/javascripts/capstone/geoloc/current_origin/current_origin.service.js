@@ -2,8 +2,8 @@
   "use strict";
 
   angular
-    .module("spa-demo.geoloc")
-    .service("spa-demo.geoloc.currentOrigin", CurrentOrigin);
+    .module("capstone.geoloc")
+    .service("capstone.geoloc.currentOrigin", CurrentOrigin);
 
   CurrentOrigin.$inject = ["$rootScope"];
   function CurrentOrigin($rootScope) {

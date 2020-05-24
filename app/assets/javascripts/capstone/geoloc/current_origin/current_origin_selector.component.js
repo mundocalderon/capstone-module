@@ -2,15 +2,15 @@
   "use strict";
 
   angular
-    .module("spa-demo.geoloc")
-    .component("sdCurrentOriginSelector", {
+    .module("capstone.geoloc")
+    .component("capCurrentOriginSelector", {
       templateUrl: templateUrl,
       controller: CurrentOriginSelectorController,
       //bindings: {},
     });
 
 
-  templateUrl.$inject = ["spa-demo.config.APP_CONFIG"];
+  templateUrl.$inject = ["capstone.config.APP_CONFIG"];
   function templateUrl(APP_CONFIG) {
     return APP_CONFIG.current_origin_selector_html;
   }    

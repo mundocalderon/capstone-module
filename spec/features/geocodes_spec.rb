@@ -11,8 +11,8 @@ RSpec.feature "Geocodes", type: :feature, js: true do
     it "displays image location" do
       image=FactoryGirl.create(:image)
       visit_image image
-      expect(page).to have_css("sd-image-editor .image-location span.lng",:text=>image.lng)
-      expect(page).to have_css("sd-image-editor .image-location span.lat",:text=>image.lat)
+      expect(page).to have_css("cap-image-editor .image-location span.lng",:text=>image.lng)
+      expect(page).to have_css("cap-image-editor .image-location span.lat",:text=>image.lat)
     end
 
     it "geocodes address" do
@@ -20,19 +20,19 @@ RSpec.feature "Geocodes", type: :feature, js: true do
       visit_images
 
       typed_text="#{address.street_address}, #{address.city}"
-      within("sd-image-editor .image-form .image-geocode") do
+      within("cap-image-editor .image-form .image-geocode") do
         fill_in("image-address", with:typed_text)
         expect(page).to have_field("image-address",:with=>typed_text)
       end    
 
-      find("sd-image-editor").click  #click away from field
+      find("cap-image-editor").click  #click away from field
       using_wait_time 10 do
-        expect(page).to have_css("sd-image-editor .image-location span.lng", text:/.+/)
-        expect(page).to have_css("sd-image-editor .image-location span.lat", text:/.+/)
+        expect(page).to have_css("cap-image-editor .image-location span.lng", text:/.+/)
+        expect(page).to have_css("cap-image-editor .image-location span.lat", text:/.+/)
       end
 
       expect(cloc=CachedLocation.by_address(typed_text).first).to_not be_nil
-      within("sd-image-editor .image-form") do
+      within("cap-image-editor .image-form") do
         expect(page).to have_css(".image-geocode .formatted_address", text:cloc.location[:formatted_address])
         expect(page).to have_css(".image-location span.lng",:text=>cloc.location[:position][:lng])
         expect(page).to have_css(".image-location span.lat",:text=>cloc.location[:position][:lat])
@@ -53,7 +53,7 @@ RSpec.feature "Geocodes", type: :feature, js: true do
       within(".image-geocode") do
         fill_in("image-address", with:typed_text)
       end    
-      find("sd-image-editor").click   #find somewhere to click
+      find("cap-image-editor").click   #find somewhere to click
       using_wait_time 10 do
         expect(page).to have_css(".image-location span.lng", text:/.+/)
         expect(page).to have_css(".image-location span.lat", text:/.+/)
