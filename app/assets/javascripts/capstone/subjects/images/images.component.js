@@ -57,9 +57,10 @@
                                      "capstone.subjects.Image",
                                      "capstone.subjects.ImageThing",
                                      "capstone.subjects.ImageLinkableThing",
-                                     "capstone.layout.DataUtils"
+                                     "capstone.layout.DataUtils",
+                                     "capstone.geoloc.geocoder",
                                      ];
-  function ImageEditorController($scope, $q, $state, $stateParams, Authz, Image, ImageThing, ImageLinkableThing, DataUtils) {
+  function ImageEditorController($scope, $q, $state, $stateParams, Authz, Image, ImageThing, ImageLinkableThing, DataUtils, geocoder) {
     var vm=this;
     vm.selected_linkables = [];
     vm.create = create;
@@ -68,6 +69,7 @@
     vm.remove = remove;
     vm.linkThings = linkThings;
     vm.setImageContent = setImageContent;
+    vm.locationByAddress = locationByAddress;
 
     vm.$onInit = function() {
       console.log("ImageEditorController",$scope);
@@ -98,6 +100,9 @@
       vm.linkable_things = ImageLinkableThing.query({image_id:itemId});
       vm.imagesAuthz.newItem(vm.item);
       $q.all([vm.item.$promise, vm.things.$promise]).catch(handleError);
+      vm.item.$promise.then(function(image) {
+        vm.location=geocoder.getLocationByPosition(image.position);
+      });
     }
 
     function clear() {
@@ -157,7 +162,16 @@
         },
         handleError);      
     }
-
+    
+    function locationByAddress(address) {
+      console.log("locationByAddress for", address);
+      geocoder.getLocationByAddress(address).$promise.then(
+        function(location){
+          vm.location = location;
+          vm.item.position = location.position;
+          console.log("location", vm.location);
+        });
+    }
 
     function handleError(response) {
       console.log("error", response);
