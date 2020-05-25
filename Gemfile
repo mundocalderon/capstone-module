@@ -1,6 +1,6 @@
 #
 source 'https://rubygems.org'
-
+ruby '2.3.8'
 gem 'rails', '4.2.6'
 gem 'rails-api', '~>0.4.0'
 gem 'pry-rails', '~>0.3.4', '>=0.3.4'
@@ -43,7 +43,7 @@ end
 
 gem 'pg', '~>0.19.0'
 gem 'mongoid', '~>5.1.5'
-gem 'mongo', '~>2.4.0'
+# gem 'mongo', '~>2.4.0'
 gem 'database_cleaner', '~>1.5.3'
 gem 'factory_girl_rails', '~>4.7.0'
 gem 'faker', '~>1.6.6'
