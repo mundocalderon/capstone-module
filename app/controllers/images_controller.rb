@@ -2,8 +2,9 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :update, :destroy, :content]
   wrap_parameters :image, include: ["caption", "position"]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  after_action :verify_authorized, except: [:content]
+  after_action :verify_authorized, except: [:content, :mod_index]
   after_action :verify_policy_scoped, only: [:index]
+  before_action :origin, only: [:mod_index]
 
   rescue_from EXIFR::MalformedJPEG, with: :contents_error
 
@@ -11,6 +12,15 @@ class ImagesController < ApplicationController
     authorize Image
     @images = policy_scope(Image.all)
     @images = ImagePolicy.merge(@images)
+  end
+
+  def mod_index
+    miles=params[:miles] ? params[:miles].to_f : nil
+
+    images = Image.within(miles, :origin=> @origin)
+    @images = images.included(params[:included_images]) if params[:included_images]
+    @images = images.excluded(params[:excluded_images]) if params[:excluded_images]
+    render "images/index"
   end
 
   def show
@@ -75,6 +85,16 @@ class ImagesController < ApplicationController
   end
 
   private
+
+    def origin
+      case
+      when params[:lng] && params[:lat]
+        @origin=Point.new(params[:lng].to_f, params[:lat].to_f)
+      else
+        raise ActionController::ParameterMissing.new(
+          "an origin [lng/lat] required")
+      end
+    end
 
     def contents_error exception
       render json: {errors:{full_messages:["unable to create image contents","#{exception}"]}},
