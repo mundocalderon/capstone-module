@@ -21,6 +21,14 @@ class Image < ActiveRecord::Base
   #Geokit macro
   acts_as_mappable
 
+  scope :included, ->(images) { 
+    where(id: images)
+  }
+
+  scope :excluded, ->(images) {
+    where.not(id: images)
+  }
+
   def to_lat_lng
   	Geokit::LatLng.new(lat,lng)
   end
