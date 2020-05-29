@@ -46,7 +46,7 @@
                                      "$stateParams",
                                      "capstone.authz.Authz",
                                      "capstone.subjects.Image"];
-  function ImageSelectorController($scope, $stateParams, Authz, Image, ) {
+  function ImageSelectorController($scope, $stateParams, Authz, Image) {
     var vm=this;
 
     vm.$onInit = function() {
