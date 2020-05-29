@@ -1,0 +1,29 @@
+<hr>
+<div class="image-mod-list" ng-show="$ctrl.authz.canQuery">
+  <label> Image Mod List </label><br>
+  <span ng-hide="$ctrl.location==null">Origin:{{$ctrl.location.formatted_address}}</span>
+    <button name="image-mod-include"
+        type="submit"          
+        ng-hide="$ctrl.location==null || $ctrl.items.length==0"
+        ng-click="$ctrl.filterBySelected()">Include Selected Image</button>
+
+    <button name="image-mod-reset"
+        type="submit"          
+        ng-hide="$ctrl.location==null || $ctrl.items.length==0"
+        ng-click="$ctrl.resetSelected()">Reset Selected</button>
+  <ul>
+    <li ng-repeat="item in $ctrl.items | orderBy:'caption'">
+      <input type="checkbox"               
+       name="image-select"
+       ng-model="item.selected"
+       value="{{item.id}}"/>
+      <a ui-sref="images({id:item.id})">
+          <span class="image_id id">{{item.id}}</span>
+          <img style="width:50px; height:33px" ng-src="{{item.content_url}}?width=50" />
+          {{item.caption}}
+      <span ng-hide="$ctrl.location==null"> ({{item.distance}}mi)</span>
+      </a>
+    </li>
+  </ul>
+<hr>
+</div>

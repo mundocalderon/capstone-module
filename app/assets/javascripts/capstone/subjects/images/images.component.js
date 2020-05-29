@@ -19,12 +19,23 @@
       require: {
         imagesAuthz: "^capImagesAuthz"
       }
+    })
+    .component("capImageMod", {
+      templateUrl: imageModTemplateUrl,
+      controller: ImageModController,
+      bindings: {
+        authz: "<"
+      },
     });
 
 
   imageSelectorTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
   function imageSelectorTemplateUrl(APP_CONFIG) {
     return APP_CONFIG.image_selector_html;
+  }
+  imageModTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
+  function imageModTemplateUrl(APP_CONFIG) {
+    return APP_CONFIG.image_mod_html;
   }
   imageEditorTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
   function imageEditorTemplateUrl(APP_CONFIG) {
@@ -35,7 +46,7 @@
                                      "$stateParams",
                                      "capstone.authz.Authz",
                                      "capstone.subjects.Image"];
-  function ImageSelectorController($scope, $stateParams, Authz, Image) {
+  function ImageSelectorController($scope, $stateParams, Authz, Image, ) {
     var vm=this;
 
     vm.$onInit = function() {
@@ -49,6 +60,59 @@
     }
     return;
     //////////////
+  }
+
+  ImageModController.$inject = ["$scope",
+                                     "$stateParams",
+                                     "capstone.authz.Authz",
+                                     "capstone.subjects.ImageMod",
+                                     "capstone.geoloc.currentOrigin"];
+  function ImageModController($scope, $stateParams, Authz, ImageMod, CurrentOrigin ) {
+    var vm=this;
+    vm.selected = [];
+    vm.filterBySelected = filterBySelected;
+    vm.resetSelected = resetSelected;
+
+    vm.$onInit = function() {
+      console.log("ImageModController",$scope);
+      $scope.$watch(function(){ return CurrentOrigin.getLocation(); },
+                    function(){ 
+                      console.log("we have a LOCATION", CurrentOrigin.getLocation());
+                      vm.location = CurrentOrigin.getLocation();
+                      vm.origin = vm.location.position;
+                      console.log("we have an origin", vm.origin, vm.origin.lng, vm.origin.lat, vm.miles, vm.selected );
+                      vm.items = ImageMod.filter({lng:vm.origin.lng, lat:vm.origin.lat, excluded_images: vm.selected});
+                      console.log("ImageModController get location",$scope);
+
+                    });
+      $scope.$watch(function(){ return CurrentOrigin.getDistance(); },
+                    function(){
+                      console.log("we have a DISTANCE", CurrentOrigin.getDistance());
+                      vm.miles = CurrentOrigin.getDistance();
+                      console.log("we have params", vm.origin, vm.origin.lng, vm.origin.lat, vm.miles );
+                      vm.items = ImageMod.filter({lng: vm.origin.lng, lat:vm.origin.lat, miles:vm.miles, excluded_images:vm.selected});
+                      console.log("ImageModController get distance",$scope);
+                    });
+    }
+    return;
+    //////////////
+
+    function filterBySelected(){
+      console.log("does the form submit the selected list", vm.selected, vm.items);
+      angular.forEach(vm.items, function(image){
+        if (image.selected) {
+          vm.selected.push(image.id);
+        }
+      });
+      console.log("does the form submit the EDITED selected list", vm.selected);
+      vm.items = ImageMod.filter({lng: vm.origin.lng, lat:vm.origin.lat, miles:vm.miles, included_images:vm.selected});
+      console.log("ImageModController filterBySelected",$scope);
+    }
+
+    function resetSelected(){
+      vm.selected = [];
+      vm.items = ImageMod.filter({lng: vm.origin.lng, lat:vm.origin.lat, miles:vm.miles, excluded_images:vm.selected})
+    }
   }
 
   ImageEditorController.$inject = ["$scope", "$q",
