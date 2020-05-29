@@ -15,7 +15,6 @@
 
 //= require capstone/config/config.module
 
-
 //= require capstone/authn/authn.module
 //= require capstone/authn/authn.config
 //= require capstone/authn/authn.service
@@ -57,6 +56,8 @@
 //= require capstone/subjects/images/images.component
 //= require capstone/subjects/images/images_authz.directive
 //= require capstone/subjects/images/images_authz.service
+//= require capstone/subjects/images/image_mods.service
+
 
 //= require capstone/subjects/things/things.service
 //= require capstone/subjects/things/thing_images.service
