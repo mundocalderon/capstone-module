@@ -29,6 +29,11 @@ class Image < ActiveRecord::Base
     where.not(id: images)
   }
 
+  def self.with_distance(origin, scope)
+    scope.select("images.*, -1.0 as distance")
+         .each {|image| image.distance = image.distance_to(origin).round(3) }
+  end
+
   def to_lat_lng
   	Geokit::LatLng.new(lat,lng)
   end

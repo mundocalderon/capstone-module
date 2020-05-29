@@ -17,9 +17,10 @@ class ImagesController < ApplicationController
   def mod_index
     miles=params[:miles] ? params[:miles].to_f : nil
 
-    images = Image.within(miles, :origin=> @origin)
-    @images = images.included(params[:included_images]) if params[:included_images]
-    @images = images.excluded(params[:excluded_images]) if params[:excluded_images]
+    @images = Image.within(miles, :origin=> @origin)
+    @images = @images.included(params[:included_images]) if params[:included_images]
+    @images = @images.excluded(params[:excluded_images]) if params[:excluded_images]
+    @images = Image.with_distance(@origin, @images) if @images && @images.count > 0
     render "images/index"
   end
 
