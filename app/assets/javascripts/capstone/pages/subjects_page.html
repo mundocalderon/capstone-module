@@ -1,6 +1,10 @@
 <div class="subjects-page col-xs-12">
   <h3>Subjects Page Placeholder</h3>
-  <cap-areas>
+  <cap-areas cap-areas-side>
+
+    <div class="areas-left"
+         ng-hide="sideVM.isHidden('left')"
+         ng-class="sideVM.isHidden('right') ?'col-sm-12':'col-sm-6 col-md-5 col-lg-4'">
 
       <cap-area label="Subjects" position="left">
         <cap-tabs>
@@ -26,6 +30,11 @@
           </cap-tab>
         </cap-tabs>
       </cap-area>
+    </div>
+
+    <div class="areas-right"
+         ng-hide="sideVM.isHidden('right')"
+         ng-class="sideVM.isHidden('left') ? 'col-sm-12':'col-sm-6 col-md-7 col-lg-8'">      
 
       <cap-area label="Map" position="right">
         <cap-tabs>
@@ -46,6 +55,6 @@
           </cap-tab>
         </cap-tabs>
       </cap-area>
-
+    </div>
   </cap-areas>
 </div>
