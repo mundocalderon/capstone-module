@@ -44,7 +44,7 @@
 //= require capstone/layout/image_loader/image_loader.component
 //= require capstone/layout/image_viewer/image_viewer.component 
 
-//= require capstone/laytout/tabs/tabs.component
+//= require capstone/layout/tabs/tabs.component
 
 
 //= require capstone/cities/cities.module
