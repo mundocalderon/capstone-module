@@ -8,7 +8,17 @@
       controller: TabsController,
       transclude: true,
       //bindings: {},
-    });
+    })
+    .component("capTab", {
+      controller: TabController,
+      bindings: {
+        label: "@"
+      },
+      require: {
+        tabsController: "^^capTabs"
+      }
+    })
+    ;
 
 
   tabsTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
@@ -19,9 +29,40 @@
   TabsController.$inject = ["$scope"];
   function TabsController($scope) {
     var vm=this;
+    vm.tabs=[];
+    vm.selectTab = selectTab;
 
     vm.$onInit = function() {
       console.log("TabsController",$scope);
+    }
+    return;
+    //////////////
+    function selectTab(tab) {
+      angular.forEach(vm.tabs, function(tab){
+        tab.selected=false;
+      });
+      tab.selected=true;
+    }
+  }
+
+
+  TabsController.prototype.addTab = function(tab) {
+    if(this.tabs.length===0) {
+      tab.selected = true;
+    }
+    this.tabs.push(tab);
+  }
+
+
+
+
+  TabController.$inject = ["$scope"];
+  function TabController($scope) {
+    var vm=this;
+
+    vm.$onInit = function() {
+      console.log("TabController",$scope);
+      vm.tabsController.addTab(vm);
     }
     return;
     //////////////
