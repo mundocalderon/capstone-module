@@ -2,14 +2,14 @@
   "use strict";
 
   angular
-    .module("spa-demo.layout")
-    .component("sdAreas", {
+    .module("capstone.layout")
+    .component("capAreas", {
       templateUrl: areasTemplateUrl,
       controller: AreasController,
       transclude: true,
       //bindings: {},
     })
-    .component("sdArea", {
+    .component("capArea", {
       templateUrl: areaTemplateUrl,
       controller: AreaController,
       transclude: true,
@@ -22,11 +22,11 @@
     })
     ;
 
-  areasTemplateUrl.$inject = ["spa-demo.config.APP_CONFIG"];
+  areasTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
   function areasTemplateUrl(APP_CONFIG) {
     return APP_CONFIG.areas_html;
   }    
-  areaTemplateUrl.$inject = ["spa-demo.config.APP_CONFIG"];
+  areaTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
   function areaTemplateUrl(APP_CONFIG) {
     return APP_CONFIG.area_html;
   }    
@@ -34,7 +34,7 @@
   AreasController.$inject = ["$scope"];
   function AreasController($scope) {
     var vm=this;
-    var.areas = [];
+    vm.areas = [];
 
     vm.$onInit = function() {
       console.log("AreasController",$scope);
