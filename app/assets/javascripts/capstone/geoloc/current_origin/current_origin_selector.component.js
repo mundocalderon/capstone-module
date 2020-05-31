@@ -30,7 +30,7 @@
     vm.changeDistance=changeDistance;
 
     vm.$onInit = function() {
-      console.log("CurrentOriginSelectorController",$scope);
+      // console.log("CurrentOriginSelectorController",$scope);
     }
     return;
     //////////////
@@ -57,7 +57,7 @@
     function useCurrentLocation() {
       myLocation.getCurrentLocation().then(
         function(location){
-          console.log("useCurrentLocation", location);
+          // console.log("useCurrentLocation", location);
           currentOrigin.setLocation(location);
           vm.myPositionError=null;
         },

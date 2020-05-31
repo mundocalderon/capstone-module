@@ -25,13 +25,13 @@
 
         function getLocationByAddress(address) {
         	var result = addresses.get({address: address});
-        	console.log("locateByAddress=", result)
+        	// console.log("locateByAddress=", result)
         	return result;
         }
 
         function getLocationByPosition(position) {
         	var result = positions.get({lng: position.lng, lat:position.lat});
-        	console.log("locateByPosition=", result )
+        	// console.log("locateByPosition=", result )
         	return result;
         }
     }
