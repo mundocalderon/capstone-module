@@ -48,6 +48,8 @@
   function AreasController($scope) {
     var vm=this;
     vm.areas = [];
+    vm.areasLeft = [];
+    vm.areasRight = [];
 
     vm.$onInit = function() {
       console.log("AreasController",$scope);
@@ -113,5 +115,5 @@
       return result;
     }
   }
-  
+
 })();
