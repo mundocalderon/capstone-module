@@ -10,7 +10,9 @@
       //bindings: {},
     })
     .component("capTab", {
+      templateUrl: tabTemplateUrl,
       controller: TabController,
+      transclude: true,
       bindings: {
         label: "@"
       },
@@ -24,7 +26,11 @@
   tabsTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
   function tabsTemplateUrl(APP_CONFIG) {
     return APP_CONFIG.tabs_html;
-  }    
+  }
+  tabTemplateUrl.$inject = ["capstone.config.APP_CONFIG"];
+  function tabTemplateUrl(APP_CONFIG) {
+    return APP_CONFIG.tab_html;
+  }       
 
   TabsController.$inject = ["$scope"];
   function TabsController($scope) {
