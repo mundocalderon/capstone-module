@@ -31,8 +31,9 @@
 
 //= require capstone/geoloc/geoloc.module
 //= require capstone/geoloc/geocoder.service
+//= require capstone/geoloc/map.service
 //= require capstone/geoloc/my_location.service 
-// require capstone/geoloc/jhu_location.config 
+//= require capstone/geoloc/jhu_location.config 
 //= require capstone/geoloc/current_origin/current_origin.service
 //= require capstone/geoloc/current_origin/current_origin_selector.component
 
@@ -68,5 +69,6 @@
 //= require capstone/subjects/things/things_authz.service
 
 //= require capstone/subjects/current_subjects/current_subjects.service
+//= require capstone/subjects/current_subjects/current_subjects.component
 //= require capstone/subjects/current_images/current_images.component
 //= require capstone/subjects/current_things/current_things.component
