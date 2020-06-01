@@ -18,7 +18,7 @@
         position: "@"  
       },
       require: {
-        AreasController: "^^capAreas"
+        areasController: "^^capAreas"
       }
     })
     .directive("capAreasSide", [function(){
@@ -94,7 +94,7 @@
 
     vm.$onInit = function() {
       console.log("AreaController",$scope);
-      vm.AreasController.addArea(vm);
+      vm.areasController.addArea(vm);
     }
     return;
     //////////////
