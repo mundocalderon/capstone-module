@@ -5,6 +5,7 @@
         .module("capstone.config", [])
         .constant("capstone.config.APP_CONFIG", {
           server_url: "<%= ENV['RAILS_API_URL'] %>",
+          default_position: {"lng":-76.61183685064316, "lat":39.28583496489344},
           
           main_page_html: "<%= asset_path('capstone/pages/main.html') %>",
           signup_page_html: "<%= asset_path('capstone/pages/signup_page.html') %>",
@@ -28,7 +29,10 @@
           image_editor_html: "<%= asset_path('capstone/subjects/images/image_editor.html') %>",
           thing_selector_html: "<%= asset_path('capstone/subjects/things/thing_selector.html') %>",
           thing_editor_html: "<%= asset_path('capstone/subjects/things/thing_editor.html') %>",
-          authn_signup_html: "<%= asset_path('capstone/authn/signup/signup.html') %>"
+          authn_signup_html: "<%= asset_path('capstone/authn/signup/signup.html') %>",
+
+          current_images_html: "<%= asset_path('capstone/subjects/current_images/current_images.html') %>",
+          current_things_html: "<%= asset_path('capstone/subjects/current_things/current_things.html') %>",
         });
 
 })();

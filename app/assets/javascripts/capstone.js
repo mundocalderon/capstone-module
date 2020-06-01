@@ -66,3 +66,7 @@
 //= require capstone/subjects/things/things.component
 //= require capstone/subjects/things/things_authz.directive
 //= require capstone/subjects/things/things_authz.service
+
+//= require capstone/subjects/current_subjects/current_subjects.service
+//= require capstone/subjects/current_images/current_images.component
+//= require capstone/subjects/current_things/current_things.component
