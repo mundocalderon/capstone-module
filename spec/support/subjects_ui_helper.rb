@@ -73,7 +73,7 @@ module SubjectsUiHelper
                               :visible=>false,
                               :count=>ThingImage.where(:thing=>thing).count,
                               :wait=>5)
-      wait_until {find("sd-image-viewer .image-area img")[:complete]==true}       
+      wait_until {find("cap-image-viewer .image-area img")[:complete]==true}       
       if (page.has_css?("ul.thing-images"))
         expect(page).to have_css("ul.thing-images li span.image_id",
                                 :visible=>false,
@@ -140,7 +140,7 @@ def set_origin address, distance=nil
   end
 
   def select_thing thing_id
-    within("sd-area[label='Map']") do #make some Thing current
+    within("cap-area[label='Map']") do #make some Thing current
       find("div.tabs-pane ul li a", :text=>"Things").click
       id=find("ul.things span.thing_id", visible:false, :text=>thing_id)
       id.find(:xpath,"..").click
@@ -149,7 +149,7 @@ def set_origin address, distance=nil
     thing_id
   end
   def select_image image_id, thing_id=nil
-    within("sd-area[label='Subjects']") do #select orphan Image
+    within("cap-area[label='Subjects']") do #select orphan Image
       find("div.tabs-pane ul li a", :text=>"Images").click
       selector=["ul.images span.image_id", {visible:false, text:image_id}]
       expect(page).to have_css(*selector)
@@ -165,7 +165,7 @@ def set_origin address, distance=nil
     image_id
   end
   def get_current_thing_id
-    within("sd-area[label='Map']") do #make some Thing current
+    within("cap-area[label='Map']") do #make some Thing current
       find("div.tabs-pane ul li a", :text=>"Things").click
       id=find("div.tabs-pane ul.things li.selected span.thing_id",
                                                 visible:false).text(:all)
@@ -173,14 +173,14 @@ def set_origin address, distance=nil
     end
   end
   def has_no_current_thing_id
-    within("sd-area[label='Map']") do #make some Thing current
+    within("cap-area[label='Map']") do #make some Thing current
       find("div.tabs-pane ul li a", :text=>"Things").click
       expect(page).to have_no_css("div.tabs-pane ul.things li.selected span.thing_id",
                                                 visible:false)
     end
   end
   def get_current_image_id
-    within("sd-area[label='Subjects']") do #make some Thing current
+    within("cap-area[label='Subjects']") do #make some Thing current
       find("div.tabs-pane ul li a", :text=>"Images").click
       id=find("div.tabs-pane ul.images li.selected span.image_id",
                                                 visible:false).text(:all)
