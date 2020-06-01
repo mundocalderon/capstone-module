@@ -55,7 +55,13 @@
             console.log("map changed markers", marker);
             currentSubjects.setCurrentSubjectId(marker.thing_id, marker.image_id);
           }
-        });    
+        });  
+      $scope.$watch(
+        function() { return currentOrigin.getLocation(); },
+        function(location) { 
+          vm.location = location;
+          vm.updateOrigin(); 
+        });  
     }
 
     return;
@@ -127,14 +133,21 @@
   }
 
   CurrentSubjectsMapController.prototype.updateOrigin = function() {
-    //...
+    if (this.map && this.location) {
+      this.map.center({ 
+        center: this.location.position
+      });
+      this.map.displayOriginMarker(this.originInfoWindow(this.location));
+    }
   }
 
   CurrentSubjectsMapController.prototype.setActiveMarker = function(thing_id, image_id) {
     if (!this.map) { 
       return; 
     } else if (!thing_id && !image_id) {
+      if(this.map.getCurrentMarker().title!=='origin'){
         this.map.setActiveMarker(null);
+      }
     } else {
       var markers=this.map.getMarkers();
       for (var i=0; i<markers.length; i++) {
