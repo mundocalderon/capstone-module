@@ -139,6 +139,10 @@ img.image-preview {
 }
 
 
+cap-image-viewer div.image-items span.id {
+  display: none;
+}
+
 /*** media queries ****/
 
 /* Large */
