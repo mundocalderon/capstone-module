@@ -39,7 +39,7 @@
     vm.selectTab = selectTab;
 
     vm.$onInit = function() {
-      console.log("TabsController",$scope);
+      // console.log("TabsController",$scope);
     }
     return;
     //////////////
@@ -67,7 +67,7 @@
     var vm=this;
 
     vm.$onInit = function() {
-      console.log("TabController",$scope);
+      // console.log("TabController",$scope);
       vm.tabsController.addTab(vm);
     }
     return;
