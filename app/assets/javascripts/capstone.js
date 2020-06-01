@@ -33,7 +33,7 @@
 //= require capstone/geoloc/geocoder.service
 //= require capstone/geoloc/map.service
 //= require capstone/geoloc/my_location.service 
-//= require capstone/geoloc/jhu_location.config 
+// require capstone/geoloc/jhu_location.config 
 //= require capstone/geoloc/current_origin/current_origin.service
 //= require capstone/geoloc/current_origin/current_origin_selector.component
 
