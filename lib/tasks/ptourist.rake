@@ -57,6 +57,11 @@ namespace :ptourist do
     create_image_content img.merge(:image=>image)
   end
 
+  def create_thing_type ttype
+    puts "building thing type for #{ttype[:name]}"
+    ttype=ThingType.create(:name=>ttype[:name], :description=>ttype[:description])
+  end
+
   def create_image_content img
     url="#{BASE_URL}/#{img[:path]}"
     puts "downloading #{url}"
@@ -130,11 +135,24 @@ namespace :ptourist do
 
   desc "reset things, images, and links" 
   task subjects: [:users] do
-    puts "creating things, images, and links"
+    puts "creating things, images, types, and links"
 
+    thing_type={:name=>"Museum",
+                :description=>"An institution that cares for a collection of artifacts and other objects of artistic, cultural, historical, or scientific importance."}
+    create_thing_type thing_type
+
+    thing_type={:name=>"Hotel",
+                :description=>"An establishment providing accommodations, meals, and other services for travelers and tourists."}
+    create_thing_type thing_type
+
+    thing_type={:name=>"Tour",
+                :description=>"Tourism is travel for pleasure or business; also the theory and practice of touring, the business of attracting, accommodating, and entertaining tourists, and the business of operating tours. ... The ITB Berlin is the world's leading tourism trade-fair."}
+    create_thing_type thing_type
+    
     thing={:name=>"B&O Railroad Museum",
     :description=>"Discover your adventure at the B&O Railroad Museum in Baltimore, Maryland. Explore 40 acres of railroad history at the birthplace of American railroading. See, touch, and hear the most important American railroad collection in the world! Seasonal train rides for all ages.",
-    :notes=>"Trains rule, boats and cars drool"}
+    :notes=>"Trains rule, boats and cars drool",
+    :thing_type_id=>1}
     organizer=get_user("alice")
     members=boy_users
     images=[
@@ -156,7 +174,8 @@ namespace :ptourist do
 
     thing={:name=>"Baltimore Water Taxi",
     :description=>"The Water Taxi is more than a jaunt across the harbor; it’s a Baltimore institution and a way of life. Every day, thousands of residents and visitors not only rely on us to take them safely to their destinations, they appreciate our knowledge of the area and our courteous service. And every day, hundreds of local businesses rely on us to deliver customers to their locations.  We know the city. We love the city. We keep the city moving. We help keep businesses thriving. And most importantly, we offer the most unique way to see Baltimore and provide an unforgettable experience that keeps our passengers coming back again and again.",
-    :notes=>"No on-duty pirates, please"}
+    :notes=>"No on-duty pirates, please",
+    :thing_type_id=>3}
     organizer=get_user("alice")
     members=boy_users
     images=[
@@ -182,7 +201,8 @@ namespace :ptourist do
 
     thing={:name=>"Rent-A-Tour",
     :description=>"Professional guide services and itinerary planner in Baltimore, Washington DC, Annapolis and the surronding region",
-    :notes=>"Bus is clean and ready to roll"}
+    :notes=>"Bus is clean and ready to roll",
+    :thing_type_id=>3}
     organizer=get_user("greg")
     members=boy_users
     images=[
@@ -202,7 +222,8 @@ namespace :ptourist do
 
     thing={:name=>"Holiday Inn Timonium",
     :description=>"Group friendly located just a few miles north of Baltimore's Inner Harbor. Great neighborhood in Baltimore County",
-    :notes=>"Early to bed, early to rise"}
+    :notes=>"Early to bed, early to rise",
+    :thing_type_id=>2}
     organizer=get_user("carol")
     members=girl_users
     images=[
@@ -217,7 +238,8 @@ namespace :ptourist do
 
     thing={:name=>"National Aquarium",
     :description=>"Since first opening in 1981, the National Aquarium has become a world-class attraction in the heart of Baltimore. Recently celebrating our 35th Anniversary, we continue to be a symbol of urban renewal and a source of pride for Marylanders. With a mission to inspire the world’s aquatic treasures, the Aquarium is consistently ranked as one of the nation’s top aquariums and has hosted over 51 million guests since opening. A study by the Maryland Department of Economic and Employment Development determined that the Aquarium annually generates nearly $220 million in revenues, 2,000 jobs, and $6.8 million in State and local taxes. It was also recently named one of Baltimore’s Best Places to Work! In addition to housing nearly 20,000 animals, we have countless science-based education programs and hands-on conservation projects spanning from right here in the Chesapeake Bay to abroad in Costa Rica. Once you head inside, The National Aquarium has the ability to transport you all over the world in a matter of hours to discover hundreds of incredible species. From the Freshwater Crocodile in our Australia: Wild Extremes exhibit all the way to a Largetooth Sawfish in the depths of Shark Alley. Recently winning top honors from the Association of Zoos and Aquariums for outstanding design, exhibit innovation and guest engagement, we can’t forget about Living Seashore; an exhibit where guests can touch Atlantic stingrays, Horseshoe crabs, and even Moon jellies if they wish! It is a place for friends, family, and people from all walks of life to come and learn about the extraordinary creatures we share our planet with. Through education, research, conservation action and advocacy, the National Aquarium is truly pursuing a vision to change the way humanity cares for our ocean planet.",
-    :notes=>"Remember to water the fish"}
+    :notes=>"Remember to water the fish",
+    :thing_type_id=>1}
     organizer=get_user("carol")
     members=girl_users
     images=[
@@ -247,10 +269,12 @@ namespace :ptourist do
 
     thing={:name=>"Hyatt Place Baltimore",
     :description=>"The New Hyatt Place Baltimore/Inner Harbor, located near Fells Point, offers a refreshing blend of style and innovation in a neighborhood alive with cultural attractions, shopping and amazing local restaurants. 
+
 Whether you’re hungry, thirsty or bored, Hyatt Place Baltimore/Inner Harbor has something to satisfy your needs. Start your day with our free a.m. Kitchen Skillet™, featuring hot breakfast sandwiches, breads, cereals and more. Visit our 24/7 Gallery Market for freshly packaged grab n’ go items, order a hot, made-to-order appetizer or sandwich from our 24/7 Gallery Menu or enjoy a refreshing beverage from our Coffee to Cocktails Bar.
  
 Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio equipment and free weights. Then, float and splash around in our indoor pool, open year-round for your relaxation. There’s plenty of other spaces throughout our Inner Harbor hotel for you to chill and socialize with other guests. For your comfort and convenience, all Hyatt Place hotels are smoke-free.
-"}
+",
+    :thing_type_id=>2}
     organizer=get_user("marsha")
     members=girl_users
     images=[
@@ -339,8 +363,8 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     organizer=get_user("alice")
     image= {:path=>"db/bta/skyline_water_level.jpg",
      :caption=>"Skyline Water Level",
-     :lng=>-76.606205,
-     :lat=>39.281114
+     :lng=>-76.6284366, 
+     :lat=>39.2780493
      }
     create_image organizer, image
 
@@ -370,6 +394,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
 
     puts "#{Thing.count} things created and #{ThingImage.count("distinct thing_id")} with images"
     puts "#{Image.count} images created and #{ThingImage.count("distinct image_id")} for things"
+    puts "#{ThingType.count} thing_types created"
   end
 
 end
