@@ -126,7 +126,7 @@
       } else {
         markerOptions.title = ti.image_caption;
         markerOptions.icon = APP_CONFIG.orphan_marker;
-        markerOptions.content = vm.thingInfoWindow(ti);
+        markerOptions.content = vm.imageInfoWindow(ti);
       }
       vm.map.displayMarker(markerOptions);   
     }
