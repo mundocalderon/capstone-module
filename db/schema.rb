@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200523000704) do
+ActiveRecord::Schema.define(version: 20200602231630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,15 +61,24 @@ ActiveRecord::Schema.define(version: 20200523000704) do
   add_index "thing_images", ["image_id"], name: "index_thing_images_on_image_id", using: :btree
   add_index "thing_images", ["thing_id"], name: "index_thing_images_on_thing_id", using: :btree
 
-  create_table "things", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.text     "description"
-    t.text     "notes"
+  create_table "thing_types", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  create_table "things", force: :cascade do |t|
+    t.string   "name",          null: false
+    t.text     "description"
+    t.text     "notes"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "thing_type_id"
+  end
+
   add_index "things", ["name"], name: "index_things_on_name", using: :btree
+  add_index "things", ["thing_type_id"], name: "index_things_on_thing_type_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -106,5 +115,6 @@ ActiveRecord::Schema.define(version: 20200523000704) do
   add_foreign_key "roles", "users"
   add_foreign_key "thing_images", "images"
   add_foreign_key "thing_images", "things"
+  add_foreign_key "things", "thing_types"
   add_foreign_key "users", "images"
 end
