@@ -12,6 +12,7 @@
             'capstone.geoloc',
             'capstone.layout',
             'capstone.cities',
-            'capstone.subjects'
+            'capstone.subjects',
+            'capstone.thingTypes'
         ]);
 })();

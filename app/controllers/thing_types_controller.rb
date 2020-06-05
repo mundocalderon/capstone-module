@@ -5,6 +5,6 @@ class ThingTypesController < ApplicationController
 
 	def show
 		@thing_type = ThingType.find(params[:id])
-		@things = thing_type.things
+		@things = @thing_type.things
 	end
 end

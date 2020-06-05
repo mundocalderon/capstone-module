@@ -72,3 +72,9 @@
 //= require capstone/subjects/current_subjects/current_subjects.component
 //= require capstone/subjects/current_images/current_images.component
 //= require capstone/subjects/current_things/current_things.component
+
+//= require capstone/thing_types/thing_types.module
+//= require capstone/thing_types/current_thing_type_subjects/current_thing_type_subjects.service
+//= require capstone/thing_types/current_thing_type_subjects/current_thing_type_subjects.component
+//= require capstone/thing_types/current_thing_types/current_thing_types.component
+//= require capstone/thing_types/current_thing_type_things/current_thing_type_things.component

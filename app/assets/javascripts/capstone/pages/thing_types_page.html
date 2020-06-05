@@ -6,10 +6,10 @@
          ng-hide="sideVM.isHidden('left')"
          ng-class="sideVM.isHidden('right') ?'col-sm-12':'col-sm-6 col-md-5 col-lg-4'">
 
-      <cap-area label="Types" position="left">
+      <cap-area label="ThingTypes" position="left">
         <cap-tabs>
-          <cap-tab label="Types">
-            <cap-current-types></cap-current-types>
+          <cap-tab label="ThingTypes">
+            <cap-current-thing-types></cap-current-thing-types>
           </cap-tab>
         </cap-tabs>
       </cap-area>
@@ -17,7 +17,7 @@
       <cap-area label="Things" position="left">
         <cap-tabs>
           <cap-tab label="Things">
-              <cap-current-type-things></cap-current-type-things>
+              <cap-current-thing-type-things></cap-current-thing-type-things>
           </cap-tab>
         </cap-tabs>
       </cap-area>
@@ -30,7 +30,7 @@
       <cap-area label="Map" position="right">
         <cap-tabs>
           <cap-tab label="Map">
-            <cap-current-type-subjects-map></cap-current-type-subjects-map>
+            <cap-current-thing-type-subjects-map></cap-current-thing-type-subjects-map>
           </cap-tab>
         </cap-tabs>
       </cap-area>
